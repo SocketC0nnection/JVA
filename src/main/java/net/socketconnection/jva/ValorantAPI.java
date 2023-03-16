@@ -19,13 +19,6 @@ public class ValorantAPI {
         baseUrl = new URL("https://api.henrikdev.xyz/valorant/v1");
     }
 
-    public static void main(String[] args) throws IOException, InvalidRiotIdentificationException {
-        ValorantAPI valorantAPI = new ValorantAPI();
-        ValorantPlayer player = new ValorantPlayer(valorantAPI).fetchData("Socket#0312");
-
-        System.out.println(player.getPlayerCard().getLarge());
-    }
-
     public JsonObject sendRestRequest(String uriPath) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) new URL(baseUrl + uriPath).openConnection();
 
