@@ -4,7 +4,7 @@
 [discord-banner]: https://discordapp.com/api/guilds/1087072997736714310/widget.png?style=banner2
 [license-img]: https://img.shields.io/badge/License-Apache%202.0-white.svg
 
-<img align="right" src="https://raw.githubusercontent.com/SocketC0nnection/JVA/master/JVA.png?token=GHSAT0AAAAAACAFSREYXWGCCDB45K5ORZFOZAXMAJA" height="200" width="200">
+<img align="right" src="https://i.ibb.co/HBw4Bxw/Untitled-Design.png" height="200" width="200">
 
 [ ![license-img][] ][license]
 [ ![discord-img][] ][discord]
