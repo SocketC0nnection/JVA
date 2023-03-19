@@ -4,11 +4,6 @@ import net.socketconnection.jva.enums.Language;
 
 import java.util.Map;
 
-/**
- * @author SocketConnection
- * @github https://github.com/socketc0nnection
- **/
-
 public final class Update {
 
     private final String createdAt;

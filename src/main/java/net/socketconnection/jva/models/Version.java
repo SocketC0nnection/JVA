@@ -2,11 +2,6 @@ package net.socketconnection.jva.models;
 
 import net.socketconnection.jva.enums.Region;
 
-/**
- * @author SocketConnection
- * @github https://github.com/socketc0nnection
- **/
-
 public final class Version {
 
     private final String version;

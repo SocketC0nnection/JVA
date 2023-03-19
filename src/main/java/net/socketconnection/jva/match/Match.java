@@ -14,11 +14,6 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * @author SocketConnection
- * @github https://github.com/socketc0nnection
- **/
-
 public class Match {
 
     final ValorantAPI valorantAPI;

@@ -1,10 +1,5 @@
 package net.socketconnection.jva.enums;
 
-/**
- * @author SocketConnection
- * @github https://github.com/socketc0nnection
- **/
-
 public enum Agent {
 
     JETT("Jett"),

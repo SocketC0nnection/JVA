@@ -1,10 +1,5 @@
 package net.socketconnection.jva.models.image;
 
-/**
- * @author SocketConnection
- * @github https://github.com/socketc0nnection
- **/
-
 public final class AgentImage {
 
     private final String small;

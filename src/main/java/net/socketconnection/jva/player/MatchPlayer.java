@@ -10,11 +10,6 @@ import net.socketconnection.jva.match.Match;
 import net.socketconnection.jva.models.image.AgentImage;
 import net.socketconnection.jva.models.player.*;
 
-/**
- * @author SocketConnection
- * @github https://github.com/socketc0nnection
- **/
-
 public class MatchPlayer extends ValorantPlayer {
 
     Match.Team team;

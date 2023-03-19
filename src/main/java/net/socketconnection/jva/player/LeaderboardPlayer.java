@@ -7,11 +7,6 @@ import net.socketconnection.jva.exceptions.FetchException;
 
 import java.io.IOException;
 
-/**
- * @author SocketConnection
- * @github https://github.com/socketc0nnection
- **/
-
 public class LeaderboardPlayer extends Player {
 
     String playerCardId;

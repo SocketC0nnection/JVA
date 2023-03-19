@@ -4,11 +4,6 @@ import net.socketconnection.jva.ValorantAPI;
 import net.socketconnection.jva.enums.Rank;
 import net.socketconnection.jva.utils.RiotUtils;
 
-/**
- * @author SocketConnection
- * @github https://github.com/socketc0nnection
- **/
-
 public abstract class Player {
 
     ValorantAPI valorantAPI;

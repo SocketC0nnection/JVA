@@ -1,10 +1,5 @@
 package net.socketconnection.jva.models;
 
-/**
- * @author SocketConnection
- * @github https://github.com/socketc0nnection
- **/
-
 public final class WebsiteArticle {
 
     private final String bannerUrl;

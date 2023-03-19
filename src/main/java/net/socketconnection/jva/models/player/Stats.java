@@ -1,10 +1,5 @@
 package net.socketconnection.jva.models.player;
 
-/**
- * @author SocketConnection
- * @github https://github.com/socketc0nnection
- **/
-
 public final class Stats {
 
     private final int score;
