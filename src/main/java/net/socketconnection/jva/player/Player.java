@@ -15,7 +15,7 @@ public abstract class Player {
 
     String username;
     String tag;
-    String puuid;
+    String playerId;
     Rank rank;
 
     boolean fetched;
@@ -36,8 +36,8 @@ public abstract class Player {
         return rank;
     }
 
-    public String getPuuid() {
-        return puuid;
+    public String getPlayerId() {
+        return playerId;
     }
 
     public String getTag() {

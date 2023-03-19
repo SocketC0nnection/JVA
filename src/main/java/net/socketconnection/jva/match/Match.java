@@ -72,7 +72,7 @@ public class Match {
 
     public MatchPlayer getMatchPlayer(ValorantPlayer valorantPlayer) {
         for (MatchPlayer player : players) {
-            if (!player.getPuuid().equals(valorantPlayer.getPuuid())) {
+            if (!player.getPlayerId().equals(valorantPlayer.getPlayerId())) {
                 continue;
             }
 

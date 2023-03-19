@@ -31,7 +31,7 @@ public class LeaderboardPlayer extends Player {
         titleId = object.get("TitleID").getAsString();
         banned = object.get("IsBanned").getAsBoolean();
         anonymized = object.get("IsAnonymized").getAsBoolean();
-        puuid = object.get("puuid").getAsString();
+        playerId = object.get("puuid").getAsString();
         username = object.get("gameName").getAsString();
         tag = object.get("tagLine").getAsString();
         leaderboardRank = object.get("leaderboardRank").getAsInt();

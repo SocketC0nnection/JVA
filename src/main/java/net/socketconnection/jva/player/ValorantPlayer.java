@@ -37,7 +37,7 @@ public class ValorantPlayer extends Player {
 
         JsonObject accountData = valorantAPI.sendRestRequest("/v1/account/" + username + "/" + tag).getAsJsonObject().getAsJsonObject("data");
 
-        puuid = accountData.get("puuid").getAsString();
+        playerId = accountData.get("puuid").getAsString();
         region = Region.getFromRegionQuery(accountData.get("region").getAsString());
         level = accountData.get("account_level").getAsInt();
 
@@ -100,7 +100,7 @@ public class ValorantPlayer extends Player {
         Match match = new Match(valorantAPI).fetchData(matchId);
 
         for (MatchPlayer player : match.getPlayers()) {
-            if (!player.getPuuid().equals(puuid)) {
+            if (!player.getPlayerId().equals(playerId)) {
                 continue;
             }
 

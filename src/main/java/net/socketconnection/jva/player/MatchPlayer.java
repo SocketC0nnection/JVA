@@ -38,7 +38,7 @@ public class MatchPlayer extends ValorantPlayer {
     public MatchPlayer fetchData(Region region, JsonObject object) {
         this.region = region;
 
-        puuid = object.get("puuid").getAsString();
+        playerId = object.get("puuid").getAsString();
         username = object.get("name").getAsString();
         tag = object.get("tag").getAsString();
         team = Match.Team.getFromTeamName(object.get("team").getAsString());
