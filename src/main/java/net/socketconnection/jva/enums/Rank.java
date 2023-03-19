@@ -1,4 +1,4 @@
-package net.socketconnection.jva;
+package net.socketconnection.jva.enums;
 
 public enum Rank {
 
@@ -39,7 +39,7 @@ public enum Rank {
         this.rankId = rankId;
     }
 
-    public static Rank getFromName(String rankName) {
+    public static Rank getFromRankName(String rankName) {
         for(Rank rank : values()) {
             if(!rank.getRankName().equalsIgnoreCase(rankName)) {
                 continue;
@@ -51,7 +51,7 @@ public enum Rank {
         return null;
     }
 
-    public static Rank getFromId(int rankId) {
+    public static Rank getFromRankId(int rankId) {
         for(Rank rank : values()) {
             if(rank.getRankId() != rankId) {
                 continue;

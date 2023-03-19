@@ -1,4 +1,4 @@
-package net.socketconnection.jva;
+package net.socketconnection.jva.models.image;
 
 public final class RankImage {
 

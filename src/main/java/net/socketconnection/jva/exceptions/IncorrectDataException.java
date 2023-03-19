@@ -2,11 +2,16 @@ package net.socketconnection.jva.exceptions;
 
 import java.io.IOException;
 
-public class InvalidRiotIdentificationException extends IOException {
-    
+/**
+ * @author SocketConnection
+ * @github https://github.com/socketc0nnection
+ **/
+
+public class IncorrectDataException extends IOException {
+
     private final String errorMessage;
-    
-    public InvalidRiotIdentificationException(String errorMessage) {
+
+    public IncorrectDataException(String errorMessage) {
         this.errorMessage = errorMessage;
     }
 
@@ -14,4 +19,5 @@ public class InvalidRiotIdentificationException extends IOException {
     public String getMessage() {
         return errorMessage;
     }
+
 }

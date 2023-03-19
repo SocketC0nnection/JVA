@@ -1,4 +1,4 @@
-package net.socketconnection.jva;
+package net.socketconnection.jva.models.player;
 
 public final class PlayerCard {
 

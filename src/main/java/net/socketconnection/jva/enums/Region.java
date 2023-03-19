@@ -1,4 +1,4 @@
-package net.socketconnection.jva;
+package net.socketconnection.jva.enums;
 
 public enum Region {
 
@@ -7,17 +7,17 @@ public enum Region {
     ASIA_PACIFIC("ap", "Asia Pacific"),
     KOREA("kr", "Korea");
 
-    private final String query;
+    private final String regionQuery;
     private final String regionName;
 
-    Region(String query, String regionName) {
-        this.query = query;
+    Region(String regionQuery, String regionName) {
+        this.regionQuery = regionQuery;
         this.regionName = regionName;
     }
 
-    public static Region getFromQuery(String query) {
+    public static Region getFromRegionQuery(String query) {
         for(Region region : values()) {
-            if(!region.query.equalsIgnoreCase(query)) {
+            if(!region.regionQuery.equalsIgnoreCase(query)) {
                 continue;
             }
 
@@ -27,7 +27,7 @@ public enum Region {
         return null;
     }
 
-    public static Region getFromName(String regionName) {
+    public static Region getFromRegionName(String regionName) {
         for(Region region : values()) {
             if(!region.regionName.equalsIgnoreCase(regionName)) {
                 continue;
@@ -43,8 +43,7 @@ public enum Region {
         return regionName;
     }
 
-    public String getQuery() {
-        return query;
+    public String getRegionQuery() {
+        return regionQuery;
     }
-
 }
