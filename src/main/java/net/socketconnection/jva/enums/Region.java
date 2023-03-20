@@ -7,17 +7,17 @@ public enum Region {
     ASIA_PACIFIC("ap", "Asia Pacific"),
     KOREA("kr", "Korea");
 
-    private final String regionQuery;
-    private final String regionName;
+    private final String query;
+    private final String name;
 
-    Region(String regionQuery, String regionName) {
-        this.regionQuery = regionQuery;
-        this.regionName = regionName;
+    Region(String query, String name) {
+        this.query = query;
+        this.name = name;
     }
 
-    public static Region getFromRegionQuery(String query) {
+    public static Region getFromQuery(String query) {
         for(Region region : values()) {
-            if(!region.regionQuery.equalsIgnoreCase(query)) {
+            if(!region.query.equalsIgnoreCase(query)) {
                 continue;
             }
 
@@ -27,9 +27,9 @@ public enum Region {
         return null;
     }
 
-    public static Region getFromRegionName(String regionName) {
+    public static Region getFromName(String name) {
         for(Region region : values()) {
-            if(!region.regionName.equalsIgnoreCase(regionName)) {
+            if(!region.name.equalsIgnoreCase(name)) {
                 continue;
             }
 
@@ -39,11 +39,11 @@ public enum Region {
         return null;
     }
 
-    public String getRegionName() {
-        return regionName;
+    public String getName() {
+        return name;
     }
 
-    public String getRegionQuery() {
-        return regionQuery;
+    public String getQuery() {
+        return query;
     }
 }

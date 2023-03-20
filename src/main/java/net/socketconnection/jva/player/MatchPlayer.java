@@ -36,10 +36,10 @@ public class MatchPlayer extends ValorantPlayer {
         playerId = object.get("puuid").getAsString();
         username = object.get("name").getAsString();
         tag = object.get("tag").getAsString();
-        team = Match.Team.getFromTeamName(object.get("team").getAsString());
+        team = Match.Team.getFromName(object.get("team").getAsString());
         level = object.get("level").getAsInt();
-        agent = Agent.getFromAgentName(object.get("character").getAsString());
-        rank = Rank.getFromRankId(object.get("currenttier").getAsInt());
+        agent = Agent.getFromName(object.get("character").getAsString());
+        rank = Rank.getFromId(object.get("currenttier").getAsInt());
         playerTitle = object.get("player_title").getAsString();
         partyId = object.get("party_id").getAsString();
 

@@ -32,7 +32,7 @@ public class LeaderboardPlayer extends Player {
         leaderboardRank = object.get("leaderboardRank").getAsInt();
         rankRating = object.get("rankedRating").getAsInt();
         amountOfWins = object.get("numberOfWins").getAsInt();
-        rank = Rank.getFromRankId(object.get("competitiveTier").getAsInt());
+        rank = Rank.getFromId(object.get("competitiveTier").getAsInt());
 
         fetched = true;
 

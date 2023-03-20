@@ -12,15 +12,15 @@ public enum Map {
     FRACTURE("Fracture"),
     PEARL("Pearl");
 
-    private final String mapName;
+    private final String name;
 
-    Map(String mapName) {
-        this.mapName = mapName;
+    Map(String name) {
+        this.name = name;
     }
 
-    public static Map getFromMapName(String mapName) {
+    public static Map getFromName(String name) {
         for(Map map : values()) {
-            if(!map.mapName.equalsIgnoreCase(mapName)) {
+            if(!map.name.equalsIgnoreCase(name)) {
                 continue;
             }
 
@@ -30,8 +30,7 @@ public enum Map {
         return null;
     }
 
-    public String getMapName() {
-        return mapName;
+    public String getName() {
+        return name;
     }
-
 }

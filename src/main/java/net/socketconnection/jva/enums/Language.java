@@ -20,19 +20,19 @@ public enum Language {
     JAPANESE("ja_JP", "ja-jp", "Japanese"),
     KOREAN("ko_KR", "ko-kr", "Korean");
 
-    private final String languageLocale;
-    private final String languageLocaleUrl;
-    private final String languageName;
+    private final String locale;
+    private final String localeUrl;
+    private final String name;
 
-    Language(String languageLocale, String languageLocaleUrl, String languageName) {
-        this.languageLocale = languageLocale;
-        this.languageLocaleUrl = languageLocaleUrl;
-        this.languageName = languageName;
+    Language(String locale, String localeUrl, String name) {
+        this.locale = locale;
+        this.localeUrl = localeUrl;
+        this.name = name;
     }
 
-    public static Language getFromLanguageName(String languageName) {
+    public static Language getFromName(String name) {
         for(Language language : values()) {
-            if(!language.languageName.equalsIgnoreCase(languageName)) {
+            if(!language.name.equalsIgnoreCase(name)) {
                 continue;
             }
 
@@ -42,9 +42,9 @@ public enum Language {
         return null;
     }
 
-    public static Language getFromLanguageLocaleUrl(String languageLocaleUrl) {
+    public static Language getFromLocaleUrl(String localeUrl) {
         for(Language language : values()) {
-            if(!language.languageLocaleUrl.equalsIgnoreCase(languageLocaleUrl)) {
+            if(!language.localeUrl.equalsIgnoreCase(localeUrl)) {
                 continue;
             }
 
@@ -54,9 +54,9 @@ public enum Language {
         return null;
     }
 
-    public static Language getFromLanguageLocale(String languageLocale) {
+    public static Language getFromLocale(String locale) {
         for(Language language : values()) {
-            if(!language.languageLocale.equalsIgnoreCase(languageLocale)) {
+            if(!language.locale.equalsIgnoreCase(locale)) {
                 continue;
             }
 
@@ -66,15 +66,15 @@ public enum Language {
         return null;
     }
 
-    public String getLanguageName() {
-        return languageName;
+    public String getName() {
+        return name;
     }
 
-    public String getLanguageLocaleUrl() {
-        return languageLocaleUrl;
+    public String getLocaleUrl() {
+        return localeUrl;
     }
 
-    public String getLanguageLocale() {
-        return languageLocale;
+    public String getLocale() {
+        return locale;
     }
 }

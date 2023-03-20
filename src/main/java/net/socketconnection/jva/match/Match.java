@@ -38,16 +38,16 @@ public class Match {
     public Match fetchData(JsonObject object) {
         JsonObject metaData = object.getAsJsonObject("metadata");
 
-        map = Map.getFromMapName(metaData.get("map").getAsString());
+        map = Map.getFromName(metaData.get("map").getAsString());
         gameVersion = metaData.get("game_version").getAsString();
         gameLength = metaData.get("game_length").getAsLong();
         gameStart = metaData.get("game_start_patched").getAsString();
         roundsPlayed = metaData.get("rounds_played").getAsInt();
-        gameMode = GameMode.getFromGameModeName(metaData.get("mode").getAsString());
+        gameMode = GameMode.getFromName(metaData.get("mode").getAsString());
         seasonId = metaData.get("season_id").getAsString();
         platform = metaData.get("platform").getAsString();
         matchId = metaData.get("matchid").getAsString();
-        region = Region.getFromRegionQuery(metaData.get("region").getAsString());
+        region = Region.getFromQuery(metaData.get("region").getAsString());
         server = metaData.get("cluster").getAsString();
 
         JsonArray playerData = object.getAsJsonObject("players").getAsJsonArray("all_players");
@@ -82,15 +82,15 @@ public class Match {
         BLUE("Blue"),
         RED("Red");
 
-        private final String teamName;
+        private final String name;
 
-        Team(String teamName) {
-            this.teamName = teamName;
+        Team(String name) {
+            this.name = name;
         }
 
-        public static Team getFromTeamName(String teamName) {
+        public static Team getFromName(String name) {
             for (Team team : values()) {
-                if (!team.teamName.equalsIgnoreCase(teamName)) {
+                if (!team.name.equalsIgnoreCase(name)) {
                     continue;
                 }
 
@@ -100,8 +100,8 @@ public class Match {
             return null;
         }
 
-        public String getTeamName() {
-            return teamName;
+        public String getName() {
+            return name;
         }
     }
 

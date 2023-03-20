@@ -20,17 +20,17 @@ public abstract class Item {
         PLAYER_CARD("player_card", "Player Card"),
         SKIN_LEVEL("skin_level", "Skin Level");
 
-        private final String typeQuery;
-        private final String typeName;
+        private final String query;
+        private final String name;
 
-        Type(String typeQuery, String typeName) {
-            this.typeQuery = typeQuery;
-            this.typeName = typeName;
+        Type(String query, String name) {
+            this.query = query;
+            this.name = name;
         }
 
-        public static Type getFromTypeName(String typeName) {
+        public static Type getFromName(String name) {
             for(Type type : values()) {
-                if(!type.typeName.equalsIgnoreCase(typeName)) {
+                if(!type.name.equalsIgnoreCase(name)) {
                     continue;
                 }
 
@@ -40,9 +40,9 @@ public abstract class Item {
             return null;
         }
 
-        public static Type getFromTypeQuery(String typeQuery) {
+        public static Type getFromQuery(String query) {
             for(Type type : values()) {
-                if(!type.typeQuery.equalsIgnoreCase(typeQuery)) {
+                if(!type.query.equalsIgnoreCase(query)) {
                     continue;
                 }
 
@@ -52,12 +52,12 @@ public abstract class Item {
             return null;
         }
 
-        public String getTypeName() {
-            return typeName;
+        public String getName() {
+            return name;
         }
 
-        public String getTypeQuery() {
-            return typeQuery;
+        public String getQuery() {
+            return query;
         }
     }
 

@@ -10,17 +10,17 @@ public enum GameMode {
     REPLICATION("replication", "Replication"),
     ESCALATION("escalation", "Escalation");
 
-    private final String gameModeQuery;
-    private final String gameModeName;
+    private final String query;
+    private final String name;
 
-    GameMode(String gameModeQuery, String gameModeName) {
-        this.gameModeQuery = gameModeQuery;
-        this.gameModeName = gameModeName;
+    GameMode(String query, String name) {
+        this.query = query;
+        this.name = name;
     }
 
-    public static GameMode getFromGameModeQuery(String gameModeQuery) {
+    public static GameMode getFromQuery(String query) {
         for(GameMode gameMode : values()) {
-            if(!gameMode.gameModeQuery.equalsIgnoreCase(gameModeQuery)) {
+            if(!gameMode.query.equalsIgnoreCase(query)) {
                 continue;
             }
 
@@ -30,9 +30,9 @@ public enum GameMode {
         return null;
     }
 
-    public static GameMode getFromGameModeName(String gameModeName) {
+    public static GameMode getFromName(String name) {
         for(GameMode gameMode : values()) {
-            if(!gameMode.gameModeName.equalsIgnoreCase(gameModeName)) {
+            if(!gameMode.name.equalsIgnoreCase(name)) {
                 continue;
             }
 
@@ -42,11 +42,11 @@ public enum GameMode {
         return null;
     }
 
-    public String getGameModeName() {
-        return gameModeName;
+    public String getName() {
+        return name;
     }
 
-    public String getGameModeQuery() {
-        return gameModeQuery;
+    public String getQuery() {
+        return query;
     }
 }

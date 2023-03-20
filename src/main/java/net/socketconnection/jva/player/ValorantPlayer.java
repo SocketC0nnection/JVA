@@ -38,7 +38,7 @@ public class ValorantPlayer extends Player {
         JsonObject accountData = valorantAPI.sendRestRequest("/v1/account/" + username + "/" + tag).getAsJsonObject().getAsJsonObject("data");
 
         playerId = accountData.get("puuid").getAsString();
-        region = Region.getFromRegionQuery(accountData.get("region").getAsString());
+        region = Region.getFromQuery(accountData.get("region").getAsString());
         level = accountData.get("account_level").getAsInt();
 
         JsonObject cards = accountData.getAsJsonObject("card");
@@ -47,9 +47,9 @@ public class ValorantPlayer extends Player {
                 cards.get("wide").getAsString(), cards.get("id").getAsString());
         lastUpdate = accountData.get("last_update").getAsString();
 
-        JsonObject mmrData = valorantAPI.sendRestRequest("/v1/mmr/" + region.getRegionQuery() + "/" + username + "/" + tag).getAsJsonObject().getAsJsonObject("data");
+        JsonObject mmrData = valorantAPI.sendRestRequest("/v1/mmr/" + region.getQuery() + "/" + username + "/" + tag).getAsJsonObject().getAsJsonObject("data");
 
-        rank = Rank.getFromRankId(mmrData.get("currenttier").getAsInt());
+        rank = Rank.getFromId(mmrData.get("currenttier").getAsInt());
 
         JsonObject ranks = mmrData.getAsJsonObject("images");
 
@@ -78,9 +78,9 @@ public class ValorantPlayer extends Player {
         JsonArray matchHistoryData;
 
         if (gameMode == null) {
-            matchHistoryData = valorantAPI.sendRestRequest("/v3/matches/" + region.getRegionQuery() + "/" + username + "/" + tag).getAsJsonObject().getAsJsonArray("data");
+            matchHistoryData = valorantAPI.sendRestRequest("/v3/matches/" + region.getQuery() + "/" + username + "/" + tag).getAsJsonObject().getAsJsonArray("data");
         } else {
-            matchHistoryData = valorantAPI.sendRestRequest("/v3/matches/" + region.getRegionQuery() + "/" + username + "/" + tag + "?filter=" + gameMode.getGameModeQuery()).getAsJsonObject().getAsJsonArray("data");
+            matchHistoryData = valorantAPI.sendRestRequest("/v3/matches/" + region.getQuery() + "/" + username + "/" + tag + "?filter=" + gameMode.getQuery()).getAsJsonObject().getAsJsonArray("data");
         }
 
         List<Match> matches = new LinkedList<>();

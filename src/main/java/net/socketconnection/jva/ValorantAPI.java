@@ -50,7 +50,7 @@ public class ValorantAPI {
         JsonArray leaderboardData;
 
         if(riotId == null) {
-            leaderboardData = sendRestRequest("/v1/leaderboard/" + region.getRegionQuery()).getAsJsonArray();
+            leaderboardData = sendRestRequest("/v1/leaderboard/" + region.getQuery()).getAsJsonArray();
         } else {
             if(!riotId.contains("#") || riotId.split("#").length < 2) {
                 throw new InvalidRiotIdentificationException("Unknown format (right format: NAME#TAG)");
@@ -58,7 +58,7 @@ public class ValorantAPI {
 
             String[] data = riotId.split("#");
 
-            leaderboardData = sendRestRequest("/v1/leaderboard/" + region.getRegionQuery() + "?name=" + data[0] + "&tag=" + data[1]).getAsJsonArray();
+            leaderboardData = sendRestRequest("/v1/leaderboard/" + region.getQuery() + "?name=" + data[0] + "&tag=" + data[1]).getAsJsonArray();
         }
 
         List<LeaderboardPlayer> leaderboard = new LinkedList<>();
@@ -75,7 +75,7 @@ public class ValorantAPI {
     }
 
     public ServerStatus getServerStatus(Region region) throws IOException {
-        JsonObject statusData = sendRestRequest("/v1/status/" + region.getRegionQuery()).getAsJsonObject().getAsJsonObject("data");
+        JsonObject statusData = sendRestRequest("/v1/status/" + region.getQuery()).getAsJsonObject().getAsJsonObject("data");
 
         JsonArray maintenancesData = statusData.getAsJsonArray("maintenances");
         JsonArray incidentsData = statusData.getAsJsonArray("incidents");
@@ -94,7 +94,7 @@ public class ValorantAPI {
                 for(JsonElement translationElement : updateObject.getAsJsonArray("translations")) {
                     JsonObject translationObject = translationElement.getAsJsonObject();
 
-                    translations.put(Language.getFromLanguageLocale(translationObject.get("locale").getAsString()), translationObject.get("content").getAsString());
+                    translations.put(Language.getFromLocale(translationObject.get("locale").getAsString()), translationObject.get("content").getAsString());
                 }
 
                 List<String> publishLocations = new LinkedList<>();
@@ -130,7 +130,7 @@ public class ValorantAPI {
             for(JsonElement titleElement : maintenanceObject.getAsJsonArray("titles")) {
                 JsonObject titleObject = titleElement.getAsJsonObject();
 
-                titles.put(Language.getFromLanguageLocale(titleObject.get("locale").getAsString()), titleObject.get("content").getAsString());
+                titles.put(Language.getFromLocale(titleObject.get("locale").getAsString()), titleObject.get("content").getAsString());
             }
 
             String createdAt = null;
@@ -174,7 +174,7 @@ public class ValorantAPI {
                 for(JsonElement translationElement : updateObject.getAsJsonArray("translations")) {
                     JsonObject translationObject = translationElement.getAsJsonObject();
 
-                    translations.put(Language.getFromLanguageLocale(translationObject.get("locale").getAsString()), translationObject.get("content").getAsString());
+                    translations.put(Language.getFromLocale(translationObject.get("locale").getAsString()), translationObject.get("content").getAsString());
                 }
 
                 List<String> publishLocations = new LinkedList<>();
@@ -210,7 +210,7 @@ public class ValorantAPI {
             for(JsonElement titleElement : incidentObject.getAsJsonArray("titles")) {
                 JsonObject titleObject = titleElement.getAsJsonObject();
 
-                titles.put(Language.getFromLanguageLocale(titleObject.get("locale").getAsString()), titleObject.get("content").getAsString());
+                titles.put(Language.getFromLocale(titleObject.get("locale").getAsString()), titleObject.get("content").getAsString());
             }
 
             String createdAt = null;
@@ -247,14 +247,14 @@ public class ValorantAPI {
     }
 
     public Version getVersion(Region region) throws IOException {
-        JsonObject versionData = sendRestRequest("/v1/version/" + region.getRegionQuery()).getAsJsonObject().getAsJsonObject("data");
+        JsonObject versionData = sendRestRequest("/v1/version/" + region.getQuery()).getAsJsonObject().getAsJsonObject("data");
 
         return new Version(versionData.get("version").getAsString(), versionData.get("clientVersion").getAsString(),
-                versionData.get("branch").getAsString(), Region.getFromRegionQuery(versionData.get("region").getAsString()));
+                versionData.get("branch").getAsString(), Region.getFromQuery(versionData.get("region").getAsString()));
     }
 
     public List<WebsiteArticle> getWebsiteArticles(Language language) throws IOException {
-        JsonArray articleData = sendRestRequest("/v1/website/" + language.getLanguageLocaleUrl()).getAsJsonObject().getAsJsonArray("data");
+        JsonArray articleData = sendRestRequest("/v1/website/" + language.getLocaleUrl()).getAsJsonObject().getAsJsonArray("data");
 
         List<WebsiteArticle> websiteArticles = new LinkedList<>();
 
@@ -267,7 +267,7 @@ public class ValorantAPI {
                 externalLink = articleObject.get("external_link").getAsString();
             }
 
-            websiteArticles.add(new WebsiteArticle(articleObject.get("banner_url").getAsString(), WebsiteArticle.Category.getFromCategoryQuery(articleObject.get("category").getAsString()),
+            websiteArticles.add(new WebsiteArticle(articleObject.get("banner_url").getAsString(), WebsiteArticle.Category.getFromQuery(articleObject.get("category").getAsString()),
                     articleObject.get("date").getAsString(), externalLink, articleObject.get("title").getAsString(), articleObject.get("url").getAsString()));
         }
 
@@ -289,7 +289,7 @@ public class ValorantAPI {
                 JsonObject itemObject = itemElement.getAsJsonObject();
 
                 items.add(new BundleItem(itemObject.get("uuid").getAsString(), itemObject.get("name").getAsString(),
-                        itemObject.get("image").getAsString(), Item.Type.getFromTypeQuery(itemObject.get("type").getAsString()),
+                        itemObject.get("image").getAsString(), Item.Type.getFromQuery(itemObject.get("type").getAsString()),
                         itemObject.get("amount").getAsInt(), itemObject.get("discount_percent").getAsInt(), itemObject.get("base_price").getAsInt(),
                         itemObject.get("discounted_price").getAsInt(), itemObject.get("promo_item").getAsBoolean()));
             }
@@ -325,7 +325,7 @@ public class ValorantAPI {
             }
 
             items.add(new OfferItem(skinId, offerObject.get("name").getAsString(),
-                    offerObject.get("icon").getAsString(), Item.Type.getFromTypeQuery(offerObject.get("type").getAsString()),
+                    offerObject.get("icon").getAsString(), Item.Type.getFromQuery(offerObject.get("type").getAsString()),
                     offerObject.get("offer_id").getAsString(), offerObject.get("cost").getAsInt(), contentTier));
         }
 

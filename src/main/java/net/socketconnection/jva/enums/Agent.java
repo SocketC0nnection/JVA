@@ -24,17 +24,17 @@ public enum Agent {
     HARBOR("Harbor", Category.CONTROLLER),
     GEKKO("Gekko", Category.INITIATOR);
 
-    private final String agentName;
-    private final Category agentCategory;
+    private final String name;
+    private final Category category;
 
-    Agent(String agentName, Category agentCategory) {
-        this.agentName = agentName;
-        this.agentCategory = agentCategory;
+    Agent(String name, Category category) {
+        this.name = name;
+        this.category = category;
     }
 
-    public static Agent getFromAgentCategory(Category agentCategory) {
+    public static Agent getFromCategory(Category category) {
         for(Agent agent : values()) {
-            if(!agent.agentCategory.equals(agentCategory)) {
+            if(!agent.category.equals(category)) {
                 continue;
             }
 
@@ -44,9 +44,9 @@ public enum Agent {
         return null;
     }
 
-    public static Agent getFromAgentName(String agentName) {
+    public static Agent getFromName(String name) {
         for(Agent agent : values()) {
-            if(!agent.agentName.equalsIgnoreCase(agentName)) {
+            if(!agent.name.equalsIgnoreCase(name)) {
                 continue;
             }
 
@@ -56,12 +56,12 @@ public enum Agent {
         return null;
     }
 
-    public Category getAgentCategory() {
-        return agentCategory;
+    public Category getCategory() {
+        return category;
     }
 
-    public String getAgentName() {
-        return agentName;
+    public String getName() {
+        return name;
     }
 
     public enum Category {
@@ -71,15 +71,15 @@ public enum Agent {
         INITIATOR("Initiator"),
         SENTINEL("Sentinel");
 
-        private final String categoryName;
+        private final String name;
 
-        Category(String categoryName) {
-            this.categoryName = categoryName;
+        Category(String name) {
+            this.name = name;
         }
 
-        public static Category getFromCategoryName(String categoryName) {
+        public static Category getFromName(String name) {
             for(Category category : values()) {
-                if(!category.categoryName.equalsIgnoreCase(categoryName)) {
+                if(!category.name.equalsIgnoreCase(name)) {
                     continue;
                 }
 
@@ -89,8 +89,8 @@ public enum Agent {
             return null;
         }
 
-        public String getCategoryName() {
-            return categoryName;
+        public String getName() {
+            return name;
         }
     }
 }

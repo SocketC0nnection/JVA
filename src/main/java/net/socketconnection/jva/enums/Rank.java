@@ -31,17 +31,17 @@ public enum Rank {
     UNUSED_1("Unused 1", 1),
     UNRANKED("Unranked", 0);
 
-    private final String rankName;
-    private final int rankId;
+    private final String name;
+    private final int id;
 
-    Rank(String rankName, int rankId) {
-        this.rankName = rankName;
-        this.rankId = rankId;
+    Rank(String name, int id) {
+        this.name = name;
+        this.id = id;
     }
 
-    public static Rank getFromRankName(String rankName) {
+    public static Rank getFromName(String name) {
         for(Rank rank : values()) {
-            if(!rank.getRankName().equalsIgnoreCase(rankName)) {
+            if(!rank.name.equalsIgnoreCase(name)) {
                 continue;
             }
 
@@ -51,9 +51,9 @@ public enum Rank {
         return null;
     }
 
-    public static Rank getFromRankId(int rankId) {
+    public static Rank getFromId(int id) {
         for(Rank rank : values()) {
-            if(rank.getRankId() != rankId) {
+            if(rank.id != id) {
                 continue;
             }
 
@@ -63,11 +63,11 @@ public enum Rank {
         return null;
     }
 
-    public int getRankId() {
-        return rankId;
+    public int getId() {
+        return id;
     }
 
-    public String getRankName() {
-        return rankName;
+    public String getName() {
+        return name;
     }
 }

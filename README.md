@@ -224,13 +224,13 @@ Latest Release: [GitHub Releases](https://github.com/SocketC0nnection/JVA/releas
 <dependency>
     <groupId>io.github.socketc0nnection</groupId>
     <artifactId>jva</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
 </dependency>
 ```
 
 **Gradle**
 ```gradle
-implementation("io.github.socketc0nnection:jva:1.1")
+implementation("io.github.socketc0nnection:jva:1.2")
 ```
 
 ## Documentation

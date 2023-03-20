@@ -27,17 +27,17 @@ public final class WebsiteArticle {
         ANNOUNCEMENTS("announcements", "Announcements"),
         COMMUNITY("community", "Community");
 
-        private final String categoryQuery;
-        private final String categoryName;
+        private final String query;
+        private final String name;
 
-        Category(String categoryQuery, String categoryName) {
-            this.categoryQuery = categoryQuery;
-            this.categoryName = categoryName;
+        Category(String query, String name) {
+            this.query = query;
+            this.name = name;
         }
 
-        public static Category getFromCategoryName(String categoryName) {
+        public static Category getFromName(String name) {
             for(Category category : values()) {
-                if(!category.categoryName.equalsIgnoreCase(categoryName)) {
+                if(!category.name.equalsIgnoreCase(name)) {
                     continue;
                 }
 
@@ -47,9 +47,9 @@ public final class WebsiteArticle {
             return null;
         }
 
-        public static Category getFromCategoryQuery(String categoryQuery) {
+        public static Category getFromQuery(String query) {
             for(Category category : values()) {
-                if(!category.categoryQuery.equalsIgnoreCase(categoryQuery)) {
+                if(!category.query.equalsIgnoreCase(query)) {
                     continue;
                 }
 
@@ -59,14 +59,13 @@ public final class WebsiteArticle {
             return null;
         }
 
-        public String getCategoryName() {
-            return categoryName;
+        public String getName() {
+            return name;
         }
 
-        public String getCategoryQuery() {
-            return categoryQuery;
+        public String getQuery() {
+            return query;
         }
-
     }
 
     public String getUrl() {
