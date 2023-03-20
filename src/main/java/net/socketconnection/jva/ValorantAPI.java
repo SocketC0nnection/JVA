@@ -12,6 +12,11 @@ import net.socketconnection.jva.exceptions.InvalidRiotIdentificationException;
 import net.socketconnection.jva.exceptions.RateLimitedException;
 import net.socketconnection.jva.models.Version;
 import net.socketconnection.jva.models.WebsiteArticle;
+import net.socketconnection.jva.models.shop.Bundle;
+import net.socketconnection.jva.models.shop.ContentTier;
+import net.socketconnection.jva.models.shop.item.BundleItem;
+import net.socketconnection.jva.models.shop.item.Item;
+import net.socketconnection.jva.models.shop.item.OfferItem;
 import net.socketconnection.jva.models.status.ServerStatus;
 import net.socketconnection.jva.models.status.StatusEntry;
 import net.socketconnection.jva.models.status.Update;
@@ -267,6 +272,64 @@ public class ValorantAPI {
         }
 
         return websiteArticles;
+    }
+
+    public List<Bundle> getStoreBundles() throws IOException {
+        JsonArray bundlesData = sendRestRequest("/v2/store-featured").getAsJsonObject().getAsJsonArray("data");
+
+        List<Bundle> bundles = new LinkedList<>();
+
+        for(JsonElement bundleElement : bundlesData) {
+            JsonObject bundleObject = bundleElement.getAsJsonObject();
+            JsonArray itemData = bundleObject.getAsJsonArray("items");
+
+            List<BundleItem> items = new LinkedList<>();
+
+            for(JsonElement itemElement : itemData) {
+                JsonObject itemObject = itemElement.getAsJsonObject();
+
+                items.add(new BundleItem(itemObject.get("uuid").getAsString(), itemObject.get("name").getAsString(),
+                        itemObject.get("image").getAsString(), Item.Type.getFromTypeQuery(itemObject.get("type").getAsString()),
+                        itemObject.get("amount").getAsInt(), itemObject.get("discount_percent").getAsInt(), itemObject.get("base_price").getAsInt(),
+                        itemObject.get("discounted_price").getAsInt(), itemObject.get("promo_item").getAsBoolean()));
+            }
+
+            bundles.add(new Bundle(bundleObject.get("bundle_uuid").getAsString(), bundleObject.get("bundle_price").getAsInt(),
+                    bundleObject.get("whole_sale_only").getAsBoolean(), items.toArray(new BundleItem[0]), bundleObject.get("seconds_remaining").getAsLong(),
+                    bundleObject.get("expires_at").getAsString()));
+        }
+
+        return bundles;
+    }
+
+    public List<OfferItem> getStoreOffers() throws IOException {
+        JsonArray offersData = sendRestRequest("/v2/store-offers").getAsJsonObject().getAsJsonObject("data").getAsJsonArray("offers");
+
+        List<OfferItem> items = new LinkedList<>();
+
+        for(JsonElement offerElement : offersData) {
+            JsonObject offerObject = offerElement.getAsJsonObject();
+
+            String skinId = null;
+            ContentTier contentTier = null;
+
+            if(!offerObject.get("skin_id").isJsonNull()) {
+                skinId = offerObject.get("skin_id").getAsString();
+            }
+
+            if(!offerObject.get("content_tier").isJsonNull()) {
+                JsonObject contentTierObject = offerObject.getAsJsonObject("content_tier");
+
+                contentTier = new ContentTier(contentTierObject.get("name").getAsString(), contentTierObject.get("dev_name").getAsString(),
+                        contentTierObject.get("icon").getAsString());
+            }
+
+            items.add(new OfferItem(skinId, offerObject.get("name").getAsString(),
+                    offerObject.get("icon").getAsString(), Item.Type.getFromTypeQuery(offerObject.get("type").getAsString()),
+                    offerObject.get("offer_id").getAsString(), offerObject.get("cost").getAsInt(), contentTier));
+        }
+
+        return items;
     }
 
     public JsonElement sendRestRequest(String uriPath) throws IOException {
