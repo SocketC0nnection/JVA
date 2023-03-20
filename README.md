@@ -56,8 +56,8 @@ public static void main(String[] args) throws IOException {
 
     // Read out the rank using the Rank enum for example
     Rank rank = valorantPlayer.getRank();
-    // Print out the rank using the getRankName() method
-    System.out.println(rank.getRankName());
+    // Print out the rank using the getName() method
+    System.out.println(rank.getName());
 
     // Read out the level
     int level = valorantPlayer.getLevel();
@@ -90,8 +90,8 @@ public static void main(String[] args) throws IOException {
 
     // Saves the map in a variable using the Map enum
     Map map = match.getMap();
-    // Print out the map using the getMapName() method
-    System.out.println(map.getMapName());
+    // Print out the map using the getName() method
+    System.out.println(map.getName());
 
     // Get match id and region of a match using the Region enum
     String matchId = match.getMatchId();
