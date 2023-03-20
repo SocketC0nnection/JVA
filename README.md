@@ -185,6 +185,36 @@ public static void main(String[] args) throws IOException {
 }
 ```
 
+### Get all store items
+
+```java
+public static void main(String[] args) throws IOException {
+    // Initialize the main instance (API key is NOT required)
+    ValorantAPI valorantAPI = new ValorantAPI("API_KEY");
+
+    // Get all store items
+    List<OfferItem> offerItems = valorantAPI.getStoreOffers();
+    // Print out first items name
+    System.out.println(offerItems.get(0).getName());
+}
+```
+
+### Get all available store bundles
+
+```java
+public static void main(String[] args) throws IOException {
+    // Initialize the main instance (API key is NOT required)
+    ValorantAPI valorantAPI = new ValorantAPI("API_KEY");
+
+    // Get all available store bundles
+    List<Bundle> offerItems = valorantAPI.getStoreBundles();
+    // Print out first bundles price
+    System.out.println(offerItems.get(0).getBundlePrice());
+    // Print ouf second bundles expiring date
+    System.out.println(offerItems.get(1).getExpiresAt());
+}
+```
+
 ## Download
 
 Latest Release: [GitHub Releases](https://github.com/SocketC0nnection/JVA/releases/latest)
