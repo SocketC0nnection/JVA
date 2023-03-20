@@ -6,7 +6,7 @@
 
     <groupId>io.github.socketc0nnection</groupId>
     <artifactId>jva</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -61,8 +61,26 @@
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+
+    <name>JVA</name>
+    <description>A java-based wrapper for VALORANT</description>
+    <url>https://github.com/SocketC0nnection/JVA</url>
 
     <licenses>
         <license>
@@ -71,6 +89,21 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+
+    <developers>
+        <developer>
+            <name>Leon Pascal Wolf</name>
+            <email>leonpascal001@gmail.com</email>
+            <organization>GitHub</organization>
+            <organizationUrl>https://github.com/SocketC0nnection</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/SocketC0nnection/JVA.git</connection>
+        <developerConnection>scm:git:ssh://github.com:SocketC0nnection/JVA.git</developerConnection>
+        <url>https://github.com/SocketC0nnection/JVA</url>
+    </scm>
 
     <dependencies>
         <dependency>

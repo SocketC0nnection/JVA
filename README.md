@@ -222,9 +222,9 @@ Latest Release: [GitHub Releases](https://github.com/SocketC0nnection/JVA/releas
 **Maven**
 ```xml
 <dependency>
-    <groupId>net.socketconnection.jva</groupId>
+    <groupId>io.github.socketc0nnection</groupId>
     <artifactId>jva</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1</version>
 </dependency>
 ```
 
