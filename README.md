@@ -14,7 +14,7 @@
 
 JVA is a java-based wrapper for the following Valorant Rest API:
 
-https://github.com/Henrik-3/unofficial-valorant-api
+https://github.com/Henrik-3/unofficial-valorant-api v2.6.2
 
 This API is free and freely accessible for everyone. An API key is optional but not mandatory. This project is still being worked on regularly.
 
