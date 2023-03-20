@@ -228,6 +228,11 @@ Latest Release: [GitHub Releases](https://github.com/SocketC0nnection/JVA/releas
 </dependency>
 ```
 
+**Gradle**
+```gradle
+implementation("io.github.socketc0nnection:jva:1.1")
+```
+
 ## Documentation
 
 The detailed documentations are still in progress.
