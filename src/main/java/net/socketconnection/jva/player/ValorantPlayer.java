@@ -11,6 +11,7 @@ import net.socketconnection.jva.exceptions.InvalidRiotIdentificationException;
 import net.socketconnection.jva.match.Match;
 import net.socketconnection.jva.models.player.PlayerCard;
 import net.socketconnection.jva.models.image.RankImage;
+import net.socketconnection.jva.utils.GsonUtils;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -37,27 +38,30 @@ public class ValorantPlayer extends Player {
 
         JsonObject accountData = valorantAPI.sendRestRequest("/v1/account/" + username + "/" + tag).getAsJsonObject().getAsJsonObject("data");
 
-        playerId = accountData.get("puuid").getAsString();
-        region = Region.getFromQuery(accountData.get("region").getAsString());
-        level = accountData.get("account_level").getAsInt();
+        playerId = GsonUtils.getAsString(accountData.get("puuid"));
+        region = Region.getFromQuery(GsonUtils.getAsString(accountData.get("region")));
+        level = GsonUtils.getAsInt(accountData.get("account_level"));
 
         JsonObject cards = accountData.getAsJsonObject("card");
 
-        playerCard = new PlayerCard(cards.get("small").getAsString(), cards.get("large").getAsString(),
-                cards.get("wide").getAsString(), cards.get("id").getAsString());
-        lastUpdate = accountData.get("last_update").getAsString();
+        playerCard = new PlayerCard(GsonUtils.getAsString(cards.get("small")), GsonUtils.getAsString(cards.get("large")),
+                GsonUtils.getAsString(cards.get("wide")), GsonUtils.getAsString(cards.get("id")));
+        lastUpdate = GsonUtils.getAsString(accountData.get("last_update"));
 
         JsonObject mmrData = valorantAPI.sendRestRequest("/v1/mmr/" + region.getQuery() + "/" + username + "/" + tag).getAsJsonObject().getAsJsonObject("data");
 
-        rank = Rank.getFromId(mmrData.get("currenttier").getAsInt());
+        rank = Rank.getFromId(GsonUtils.getAsInt(mmrData.get("currenttier")));
 
-        JsonObject ranks = mmrData.getAsJsonObject("images");
+        if(!mmrData.get("images").isJsonNull()) {
+            JsonObject ranks = mmrData.getAsJsonObject("images");
 
-        rankImage = new RankImage(ranks.get("small").getAsString(), ranks.get("large").getAsString(),
-                ranks.get("triangle_down").getAsString(), ranks.get("triangle_up").getAsString());
-        rankRating = mmrData.get("ranking_in_tier").getAsInt();
-        mmrChange = mmrData.get("mmr_change_to_last_game").getAsInt();
-        elo = mmrData.get("elo").getAsInt();
+            rankImage = new RankImage(GsonUtils.getAsString(ranks.get("small")), GsonUtils.getAsString(ranks.get("large")),
+                    GsonUtils.getAsString(ranks.get("triangle_down")), GsonUtils.getAsString(ranks.get("triangle_up")));
+        }
+
+        rankRating = GsonUtils.getAsInt(mmrData.get("ranking_in_tier"));
+        mmrChange = GsonUtils.getAsInt(mmrData.get("mmr_change_to_last_game"));
+        elo = GsonUtils.getAsInt(mmrData.get("elo"));
 
         fetched = true;
 

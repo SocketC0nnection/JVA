@@ -9,6 +9,7 @@ import net.socketconnection.jva.enums.Map;
 import net.socketconnection.jva.enums.Region;
 import net.socketconnection.jva.player.MatchPlayer;
 import net.socketconnection.jva.player.ValorantPlayer;
+import net.socketconnection.jva.utils.GsonUtils;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -31,6 +32,8 @@ public class Match {
     String server;
     List<MatchPlayer> players;
 
+    boolean fetched;
+
     public Match(ValorantAPI valorantAPI) {
         this.valorantAPI = valorantAPI;
     }
@@ -38,17 +41,17 @@ public class Match {
     public Match fetchData(JsonObject object) {
         JsonObject metaData = object.getAsJsonObject("metadata");
 
-        map = Map.getFromName(metaData.get("map").getAsString());
-        gameVersion = metaData.get("game_version").getAsString();
-        gameLength = metaData.get("game_length").getAsLong();
-        gameStart = metaData.get("game_start_patched").getAsString();
-        roundsPlayed = metaData.get("rounds_played").getAsInt();
-        gameMode = GameMode.getFromName(metaData.get("mode").getAsString());
-        seasonId = metaData.get("season_id").getAsString();
-        platform = metaData.get("platform").getAsString();
-        matchId = metaData.get("matchid").getAsString();
-        region = Region.getFromQuery(metaData.get("region").getAsString());
-        server = metaData.get("cluster").getAsString();
+        map = Map.getFromName(GsonUtils.getAsString(metaData.get("map")));
+        gameVersion = GsonUtils.getAsString(metaData.get("game_version"));
+        gameLength = GsonUtils.getAsLong(metaData.get("game_length"));
+        gameStart = GsonUtils.getAsString(metaData.get("game_start_patched"));
+        roundsPlayed = GsonUtils.getAsInt(metaData.get("rounds_played"));
+        gameMode = GameMode.getFromName(GsonUtils.getAsString(metaData.get("mode")));
+        seasonId = GsonUtils.getAsString(metaData.get("season_id"));
+        platform = GsonUtils.getAsString(metaData.get("platform"));
+        matchId = GsonUtils.getAsString(metaData.get("matchid"));
+        region = Region.getFromQuery(GsonUtils.getAsString(metaData.get("region")));
+        server = GsonUtils.getAsString(metaData.get("cluster"));
 
         JsonArray playerData = object.getAsJsonObject("players").getAsJsonArray("all_players");
 
@@ -57,6 +60,8 @@ public class Match {
         for (JsonElement element : playerData) {
             players.add(new MatchPlayer(valorantAPI).fetchData(region, element.getAsJsonObject()));
         }
+
+        fetched = true;
 
         return this;
     }
@@ -103,6 +108,10 @@ public class Match {
         public String getName() {
             return name;
         }
+    }
+
+    public boolean isFetched() {
+        return fetched;
     }
 
     public List<MatchPlayer> getPlayers() {

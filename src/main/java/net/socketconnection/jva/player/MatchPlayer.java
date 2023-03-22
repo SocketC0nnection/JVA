@@ -9,6 +9,7 @@ import net.socketconnection.jva.enums.Region;
 import net.socketconnection.jva.match.Match;
 import net.socketconnection.jva.models.image.AgentImage;
 import net.socketconnection.jva.models.player.*;
+import net.socketconnection.jva.utils.GsonUtils;
 
 public class MatchPlayer extends ValorantPlayer {
 
@@ -33,65 +34,58 @@ public class MatchPlayer extends ValorantPlayer {
     public MatchPlayer fetchData(Region region, JsonObject object) {
         this.region = region;
 
-        playerId = object.get("puuid").getAsString();
-        username = object.get("name").getAsString();
-        tag = object.get("tag").getAsString();
-        team = Match.Team.getFromName(object.get("team").getAsString());
-        level = object.get("level").getAsInt();
-        agent = Agent.getFromName(object.get("character").getAsString());
-        rank = Rank.getFromId(object.get("currenttier").getAsInt());
-        playerTitle = object.get("player_title").getAsString();
-        partyId = object.get("party_id").getAsString();
-
-        JsonElement playtimeElement = object.getAsJsonObject("session_playtime").get("milliseconds");
-
-        if(playtimeElement.isJsonNull()) {
-            playtime = 0;
-        } else {
-            playtime = playtimeElement.getAsLong();
-        }
+        playerId = GsonUtils.getAsString(object.get("puuid"));
+        username = GsonUtils.getAsString(object.get("name"));
+        tag = GsonUtils.getAsString(object.get("tag"));
+        team = Match.Team.getFromName(GsonUtils.getAsString(object.get("team")));
+        level = GsonUtils.getAsInt(object.get("level"));
+        agent = Agent.getFromName(GsonUtils.getAsString(object.get("character")));
+        rank = Rank.getFromId(GsonUtils.getAsInt(object.get("currenttier")));
+        playerTitle = GsonUtils.getAsString(object.get("player_title"));
+        partyId = GsonUtils.getAsString(object.get("party_id"));
+        playtime = GsonUtils.getAsLong(object.getAsJsonObject("session_playtime").get("milliseconds"));
 
         JsonObject behaviorData = object.getAsJsonObject("behavior");
         JsonObject friendlyFireData = behaviorData.getAsJsonObject("friendly_fire");
 
-        behavior = new Behavior(behaviorData.get("afk_rounds").getAsInt(), friendlyFireData.get("incoming").getAsInt(),
-                friendlyFireData.get("outgoing").getAsInt(), behaviorData.get("rounds_in_spawn").getAsInt());
+        behavior = new Behavior(GsonUtils.getAsInt(behaviorData.get("afk_rounds")), GsonUtils.getAsInt(friendlyFireData.get("incoming")),
+                GsonUtils.getAsInt(friendlyFireData.get("outgoing")), GsonUtils.getAsInt(behaviorData.get("rounds_in_spawn")));
 
         JsonObject platformData = object.getAsJsonObject("platform");
         JsonObject osData = platformData.getAsJsonObject("os");
 
-        platform = new Platform(platformData.get("type").getAsString(), osData.get("name").getAsString(),
-                osData.get("version").getAsString());
+        platform = new Platform(GsonUtils.getAsString(platformData.get("type")), GsonUtils.getAsString(osData.get("name")),
+                GsonUtils.getAsString(osData.get("version")));
 
         JsonObject abilityCastData = object.getAsJsonObject("ability_casts");
 
-        abilityCasts = new AbilityCasts(abilityCastData.get("c_cast").getAsInt(), abilityCastData.get("q_cast").getAsInt(),
-                abilityCastData.get("e_cast").getAsInt(), abilityCastData.get("x_cast").getAsInt());
+        abilityCasts = new AbilityCasts(GsonUtils.getAsInt(abilityCastData.get("c_cast")), GsonUtils.getAsInt(abilityCastData.get("q_cast")),
+                GsonUtils.getAsInt(abilityCastData.get("e_cast")), GsonUtils.getAsInt(abilityCastData.get("x_cast")));
 
         JsonObject assetsData = object.getAsJsonObject("assets");
         JsonObject cardData = assetsData.getAsJsonObject("card");
         JsonObject agentData = assetsData.getAsJsonObject("agent");
 
-        playerCard = new PlayerCard(cardData.get("small").getAsString(), cardData.get("large").getAsString(),
-                cardData.get("wide").getAsString(), object.get("player_card").getAsString());
-        agentImage = new AgentImage(agentData.get("small").getAsString(), agentData.get("bust").getAsString(),
-                agentData.get("full").getAsString(), agentData.get("killfeed").getAsString());
+        playerCard = new PlayerCard(GsonUtils.getAsString(cardData.get("small")), GsonUtils.getAsString(cardData.get("large")),
+                GsonUtils.getAsString(cardData.get("wide")), GsonUtils.getAsString(object.get("player_card")));
+        agentImage = new AgentImage(GsonUtils.getAsString(agentData.get("small")), GsonUtils.getAsString(agentData.get("bust")),
+                GsonUtils.getAsString(agentData.get("full")), GsonUtils.getAsString(agentData.get("killfeed")));
 
         JsonObject statsData = object.getAsJsonObject("stats");
 
-        stats = new Stats(statsData.get("score").getAsInt(), statsData.get("kills").getAsInt(), statsData.get("deaths").getAsInt(),
-                statsData.get("assists").getAsInt(), statsData.get("bodyshots").getAsInt(), statsData.get("headshots").getAsInt(),
-                statsData.get("legshots").getAsInt());
+        stats = new Stats(GsonUtils.getAsInt(statsData.get("score")), GsonUtils.getAsInt(statsData.get("kills")), GsonUtils.getAsInt(statsData.get("deaths")),
+                GsonUtils.getAsInt(statsData.get("assists")), GsonUtils.getAsInt(statsData.get("bodyshots")), GsonUtils.getAsInt(statsData.get("headshots")),
+                GsonUtils.getAsInt(statsData.get("legshots")));
 
         JsonObject economyData = object.getAsJsonObject("economy");
         JsonObject spentData = economyData.getAsJsonObject("spent");
         JsonObject loadoutData = economyData.getAsJsonObject("loadout_value");
 
-        economy = new Economy(spentData.get("overall").getAsInt(), spentData.get("average").getAsInt(),
-                loadoutData.get("overall").getAsInt(), loadoutData.get("average").getAsInt());
+        economy = new Economy(GsonUtils.getAsInt(spentData.get("overall")), GsonUtils.getAsInt(spentData.get("average")),
+                GsonUtils.getAsInt(loadoutData.get("overall")), GsonUtils.getAsInt(loadoutData.get("average")));
 
-        damageMade = object.get("damage_made").getAsInt();
-        damageReceived = object.get("damage_received").getAsInt();
+        damageMade = GsonUtils.getAsInt(object.get("damage_made"));
+        damageReceived = GsonUtils.getAsInt(object.get("damage_received"));
 
         fetched = true;
 

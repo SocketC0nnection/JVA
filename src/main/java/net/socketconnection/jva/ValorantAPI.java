@@ -21,6 +21,7 @@ import net.socketconnection.jva.models.status.ServerStatus;
 import net.socketconnection.jva.models.status.StatusEntry;
 import net.socketconnection.jva.models.status.Update;
 import net.socketconnection.jva.player.LeaderboardPlayer;
+import net.socketconnection.jva.utils.GsonUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -94,35 +95,25 @@ public class ValorantAPI {
                 for(JsonElement translationElement : updateObject.getAsJsonArray("translations")) {
                     JsonObject translationObject = translationElement.getAsJsonObject();
 
-                    translations.put(Language.getFromLocale(translationObject.get("locale").getAsString()), translationObject.get("content").getAsString());
+                    translations.put(Language.getFromLocale(GsonUtils.getAsString(translationObject.get("locale"))),
+                            GsonUtils.getAsString(translationObject.get("content")));
                 }
 
                 List<String> publishLocations = new LinkedList<>();
 
                 for(JsonElement publishElement : updateObject.getAsJsonArray("publish_locations")) {
-                    publishLocations.add(publishElement.getAsString());
+                    publishLocations.add(GsonUtils.getAsString(publishElement));
                 }
 
-                String createdAt = null;
-                String updatedAt = null;
-
-                if(!updateObject.get("created_at").isJsonNull()) {
-                    createdAt = updateObject.get("created_at").getAsString();
-                }
-
-                if(!updateObject.get("updated_at").isJsonNull()) {
-                    updatedAt = updateObject.get("updated_at").getAsString();
-                }
-
-                updates.add(new Update(createdAt, updatedAt,
-                        updateObject.get("publish").getAsBoolean(), updateObject.get("id").getAsInt(), translations,
-                        publishLocations.toArray(new String[0]), updateObject.get("author").getAsString()));
+                updates.add(new Update(GsonUtils.getAsString(updateObject.get("created_at")), GsonUtils.getAsString(updateObject.get("updated_at")),
+                        GsonUtils.getAsBoolean(updateObject.get("publish")), GsonUtils.getAsInt(updateObject.get("id")), translations,
+                        publishLocations.toArray(new String[0]), GsonUtils.getAsString(updateObject.get("author"))));
             }
 
             List<String> platforms = new LinkedList<>();
 
             for(JsonElement platformElement : maintenanceObject.getAsJsonArray("platforms")) {
-                platforms.add(platformElement.getAsString());
+                platforms.add(GsonUtils.getAsString(platformElement));
             }
 
             Map<Language, String> titles = new LinkedHashMap<>();
@@ -130,37 +121,13 @@ public class ValorantAPI {
             for(JsonElement titleElement : maintenanceObject.getAsJsonArray("titles")) {
                 JsonObject titleObject = titleElement.getAsJsonObject();
 
-                titles.put(Language.getFromLocale(titleObject.get("locale").getAsString()), titleObject.get("content").getAsString());
+                titles.put(Language.getFromLocale(GsonUtils.getAsString(titleObject.get("locale"))), GsonUtils.getAsString(titleObject.get("content")));
             }
 
-            String createdAt = null;
-            String archiveAt = null;
-            String updatedAt = null;
-            String maintenanceStatus = null;
-            String incidentSeverity = null;
-
-            if(!maintenanceObject.get("created_at").isJsonNull()) {
-                createdAt = maintenanceObject.get("created_at").getAsString();
-            }
-
-            if(!maintenanceObject.get("archive_at").isJsonNull()) {
-                archiveAt = maintenanceObject.get("archive_at").getAsString();
-            }
-
-            if(!maintenanceObject.get("updated_at").isJsonNull()) {
-                updatedAt = maintenanceObject.get("updated_at").getAsString();
-            }
-
-            if(!maintenanceObject.get("maintenance_status").isJsonNull()) {
-                maintenanceStatus = maintenanceObject.get("maintenance_status").getAsString();
-            }
-
-            if(!maintenanceObject.get("incident_severity").isJsonNull()) {
-                incidentSeverity = maintenanceObject.get("incident_severity").getAsString();
-            }
-
-            maintenances.add(new StatusEntry(createdAt, archiveAt, updates.toArray(new Update[0]), platforms.toArray(new String[0]),
-                    updatedAt, maintenanceObject.get("id").getAsInt(), titles, maintenanceStatus, incidentSeverity));
+            maintenances.add(new StatusEntry(GsonUtils.getAsString(maintenanceObject.get("created_at")), GsonUtils.getAsString(maintenanceObject.get("archive_at")),
+                    updates.toArray(new Update[0]), platforms.toArray(new String[0]), GsonUtils.getAsString(maintenanceObject.get("updated_at")),
+                    GsonUtils.getAsInt(maintenanceObject.get("id")), titles, GsonUtils.getAsString(maintenanceObject.get("maintenance_status")),
+                    GsonUtils.getAsString(maintenanceObject.get("incident_severity"))));
         }
 
         for(JsonElement incidentElement : incidentsData) {
@@ -174,35 +141,24 @@ public class ValorantAPI {
                 for(JsonElement translationElement : updateObject.getAsJsonArray("translations")) {
                     JsonObject translationObject = translationElement.getAsJsonObject();
 
-                    translations.put(Language.getFromLocale(translationObject.get("locale").getAsString()), translationObject.get("content").getAsString());
+                    translations.put(Language.getFromLocale(GsonUtils.getAsString(translationObject.get("locale"))), GsonUtils.getAsString(translationObject.get("content")));
                 }
 
                 List<String> publishLocations = new LinkedList<>();
 
                 for(JsonElement publishElement : updateObject.getAsJsonArray("publish_locations")) {
-                    publishLocations.add(publishElement.getAsString());
+                    publishLocations.add(GsonUtils.getAsString(publishElement));
                 }
 
-                String createdAt = null;
-                String updatedAt = null;
-
-                if(!updateObject.get("created_at").isJsonNull()) {
-                    createdAt = updateObject.get("created_at").getAsString();
-                }
-
-                if(!updateObject.get("updated_at").isJsonNull()) {
-                    updatedAt = updateObject.get("updated_at").getAsString();
-                }
-
-                updates.add(new Update(createdAt, updatedAt,
-                        updateObject.get("publish").getAsBoolean(), updateObject.get("id").getAsInt(), translations,
-                        publishLocations.toArray(new String[0]), updateObject.get("author").getAsString()));
+                updates.add(new Update(GsonUtils.getAsString(updateObject.get("created_at")), GsonUtils.getAsString(updateObject.get("updated_at")),
+                        GsonUtils.getAsBoolean(updateObject.get("publish")), GsonUtils.getAsInt(updateObject.get("id")), translations,
+                        publishLocations.toArray(new String[0]), GsonUtils.getAsString(updateObject.get("author"))));
             }
 
             List<String> platforms = new LinkedList<>();
 
             for(JsonElement platformElement : incidentObject.getAsJsonArray("platforms")) {
-                platforms.add(platformElement.getAsString());
+                platforms.add(GsonUtils.getAsString(platformElement));
             }
 
             Map<Language, String> titles = new LinkedHashMap<>();
@@ -210,37 +166,13 @@ public class ValorantAPI {
             for(JsonElement titleElement : incidentObject.getAsJsonArray("titles")) {
                 JsonObject titleObject = titleElement.getAsJsonObject();
 
-                titles.put(Language.getFromLocale(titleObject.get("locale").getAsString()), titleObject.get("content").getAsString());
+                titles.put(Language.getFromLocale(GsonUtils.getAsString(titleObject.get("locale"))), GsonUtils.getAsString(titleObject.get("content")));
             }
 
-            String createdAt = null;
-            String archiveAt = null;
-            String updatedAt = null;
-            String maintenanceStatus = null;
-            String incidentSeverity = null;
-
-            if(!incidentObject.get("created_at").isJsonNull()) {
-                createdAt = incidentObject.get("created_at").getAsString();
-            }
-
-            if(!incidentObject.get("archive_at").isJsonNull()) {
-                archiveAt = incidentObject.get("archive_at").getAsString();
-            }
-
-            if(!incidentObject.get("updated_at").isJsonNull()) {
-                updatedAt = incidentObject.get("updated_at").getAsString();
-            }
-
-            if(!incidentObject.get("maintenance_status").isJsonNull()) {
-                maintenanceStatus = incidentObject.get("maintenance_status").getAsString();
-            }
-
-            if(!incidentObject.get("incident_severity").isJsonNull()) {
-                incidentSeverity = incidentObject.get("incident_severity").getAsString();
-            }
-
-            incidents.add(new StatusEntry(createdAt, archiveAt, updates.toArray(new Update[0]), platforms.toArray(new String[0]),
-                    updatedAt, incidentObject.get("id").getAsInt(), titles, maintenanceStatus, incidentSeverity));
+            incidents.add(new StatusEntry(GsonUtils.getAsString(incidentObject.get("created_at")), GsonUtils.getAsString(incidentObject.get("archive_at")),
+                    updates.toArray(new Update[0]), platforms.toArray(new String[0]), GsonUtils.getAsString(incidentObject.get("updated_at")),
+                    GsonUtils.getAsInt(incidentObject.get("id")), titles, GsonUtils.getAsString(incidentObject.get("maintenance_status")),
+                    GsonUtils.getAsString(incidentObject.get("incident_severity"))));
         }
 
         return new ServerStatus(maintenances.toArray(new StatusEntry[0]), incidents.toArray(new StatusEntry[0]));
@@ -249,8 +181,8 @@ public class ValorantAPI {
     public Version getVersion(Region region) throws IOException {
         JsonObject versionData = sendRestRequest("/v1/version/" + region.getQuery()).getAsJsonObject().getAsJsonObject("data");
 
-        return new Version(versionData.get("version").getAsString(), versionData.get("clientVersion").getAsString(),
-                versionData.get("branch").getAsString(), Region.getFromQuery(versionData.get("region").getAsString()));
+        return new Version(GsonUtils.getAsString(versionData.get("version")), GsonUtils.getAsString(versionData.get("clientVersion")),
+                GsonUtils.getAsString(versionData.get("branch")), Region.getFromQuery(GsonUtils.getAsString(versionData.get("region"))));
     }
 
     public List<WebsiteArticle> getWebsiteArticles(Language language) throws IOException {
@@ -261,14 +193,9 @@ public class ValorantAPI {
         for(JsonElement articleElement : articleData) {
             JsonObject articleObject = articleElement.getAsJsonObject();
 
-            String externalLink = null;
-
-            if(!articleObject.get("external_link").isJsonNull()) {
-                externalLink = articleObject.get("external_link").getAsString();
-            }
-
-            websiteArticles.add(new WebsiteArticle(articleObject.get("banner_url").getAsString(), WebsiteArticle.Category.getFromQuery(articleObject.get("category").getAsString()),
-                    articleObject.get("date").getAsString(), externalLink, articleObject.get("title").getAsString(), articleObject.get("url").getAsString()));
+            websiteArticles.add(new WebsiteArticle(GsonUtils.getAsString(articleObject.get("banner_url")), WebsiteArticle.Category.getFromQuery(GsonUtils.getAsString(articleObject.get("category"))),
+                    GsonUtils.getAsString(articleObject.get("date")), GsonUtils.getAsString(articleObject.get("external_link")),
+                    GsonUtils.getAsString(articleObject.get("title")), GsonUtils.getAsString(articleObject.get("url"))));
         }
 
         return websiteArticles;
@@ -288,15 +215,16 @@ public class ValorantAPI {
             for(JsonElement itemElement : itemData) {
                 JsonObject itemObject = itemElement.getAsJsonObject();
 
-                items.add(new BundleItem(itemObject.get("uuid").getAsString(), itemObject.get("name").getAsString(),
-                        itemObject.get("image").getAsString(), Item.Type.getFromQuery(itemObject.get("type").getAsString()),
-                        itemObject.get("amount").getAsInt(), itemObject.get("discount_percent").getAsInt(), itemObject.get("base_price").getAsInt(),
-                        itemObject.get("discounted_price").getAsInt(), itemObject.get("promo_item").getAsBoolean()));
+                items.add(new BundleItem(GsonUtils.getAsString(itemObject.get("uuid")), GsonUtils.getAsString(itemObject.get("name")),
+                        GsonUtils.getAsString(itemObject.get("image")), Item.Type.getFromQuery(GsonUtils.getAsString(itemObject.get("type"))),
+                        GsonUtils.getAsInt(itemObject.get("amount")), GsonUtils.getAsInt(itemObject.get("discount_percent")),
+                        GsonUtils.getAsInt(itemObject.get("base_price")), GsonUtils.getAsInt(itemObject.get("discounted_price")),
+                        GsonUtils.getAsBoolean(itemObject.get("promo_item"))));
             }
 
-            bundles.add(new Bundle(bundleObject.get("bundle_uuid").getAsString(), bundleObject.get("bundle_price").getAsInt(),
-                    bundleObject.get("whole_sale_only").getAsBoolean(), items.toArray(new BundleItem[0]), bundleObject.get("seconds_remaining").getAsLong(),
-                    bundleObject.get("expires_at").getAsString()));
+            bundles.add(new Bundle(GsonUtils.getAsString(bundleObject.get("bundle_uuid")), GsonUtils.getAsInt(bundleObject.get("bundle_price")),
+                    GsonUtils.getAsBoolean(bundleObject.get("whole_sale_only")), items.toArray(new BundleItem[0]), GsonUtils.getAsLong(bundleObject.get("seconds_remaining")),
+                    GsonUtils.getAsString(bundleObject.get("expires_at"))));
         }
 
         return bundles;
@@ -310,23 +238,18 @@ public class ValorantAPI {
         for(JsonElement offerElement : offersData) {
             JsonObject offerObject = offerElement.getAsJsonObject();
 
-            String skinId = null;
             ContentTier contentTier = null;
-
-            if(!offerObject.get("skin_id").isJsonNull()) {
-                skinId = offerObject.get("skin_id").getAsString();
-            }
 
             if(!offerObject.get("content_tier").isJsonNull()) {
                 JsonObject contentTierObject = offerObject.getAsJsonObject("content_tier");
 
-                contentTier = new ContentTier(contentTierObject.get("name").getAsString(), contentTierObject.get("dev_name").getAsString(),
-                        contentTierObject.get("icon").getAsString());
+                contentTier = new ContentTier(GsonUtils.getAsString(contentTierObject.get("name")),
+                        GsonUtils.getAsString(contentTierObject.get("dev_name")), GsonUtils.getAsString(contentTierObject.get("icon")));
             }
 
-            items.add(new OfferItem(skinId, offerObject.get("name").getAsString(),
-                    offerObject.get("icon").getAsString(), Item.Type.getFromQuery(offerObject.get("type").getAsString()),
-                    offerObject.get("offer_id").getAsString(), offerObject.get("cost").getAsInt(), contentTier));
+            items.add(new OfferItem(GsonUtils.getAsString(offerObject.get("skin_id")), GsonUtils.getAsString(offerObject.get("name")),
+                    GsonUtils.getAsString(offerObject.get("icon")), Item.Type.getFromQuery(GsonUtils.getAsString(offerObject.get("type"))),
+                    GsonUtils.getAsString(offerObject.get("offer_id")), GsonUtils.getAsInt(offerObject.get("cost")), contentTier));
         }
 
         return items;
@@ -343,12 +266,16 @@ public class ValorantAPI {
         connection.setDoInput(true);
 
         switch (connection.getResponseCode()) {
+            case 200:
+                break;
             case 403:
                 throw new InvalidAuthenticationException(connection.getResponseMessage());
             case 404:
                 throw new IncorrectDataException(connection.getResponseMessage());
             case 429:
                 throw new RateLimitedException(connection.getResponseMessage());
+            default:
+                throw new IncorrectDataException("Rest API returned unknown error code: " + connection.getResponseMessage());
         }
 
         StringBuilder builder = new StringBuilder();

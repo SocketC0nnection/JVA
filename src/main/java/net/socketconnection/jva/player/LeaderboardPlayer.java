@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import net.socketconnection.jva.ValorantAPI;
 import net.socketconnection.jva.enums.Rank;
 import net.socketconnection.jva.exceptions.FetchException;
+import net.socketconnection.jva.utils.GsonUtils;
 
 import java.io.IOException;
 
@@ -22,17 +23,17 @@ public class LeaderboardPlayer extends Player {
     }
 
     public LeaderboardPlayer fetchData(JsonObject object) {
-        playerCardId = object.get("PlayerCardID").getAsString();
-        titleId = object.get("TitleID").getAsString();
-        banned = object.get("IsBanned").getAsBoolean();
-        anonymized = object.get("IsAnonymized").getAsBoolean();
-        playerId = object.get("puuid").getAsString();
-        username = object.get("gameName").getAsString();
-        tag = object.get("tagLine").getAsString();
-        leaderboardRank = object.get("leaderboardRank").getAsInt();
-        rankRating = object.get("rankedRating").getAsInt();
-        amountOfWins = object.get("numberOfWins").getAsInt();
-        rank = Rank.getFromId(object.get("competitiveTier").getAsInt());
+        playerCardId = GsonUtils.getAsString(object.get("PlayerCardID"));
+        titleId = GsonUtils.getAsString(object.get("TitleID"));
+        banned = GsonUtils.getAsBoolean(object.get("IsBanned"));
+        anonymized = GsonUtils.getAsBoolean(object.get("IsAnonymized"));
+        playerId = GsonUtils.getAsString(object.get("puuid"));
+        username = GsonUtils.getAsString(object.get("gameName"));
+        tag = GsonUtils.getAsString(object.get("tagLine"));
+        leaderboardRank = GsonUtils.getAsInt(object.get("leaderboardRank"));
+        rankRating = GsonUtils.getAsInt(object.get("rankedRating"));
+        amountOfWins = GsonUtils.getAsInt(object.get("numberOfWins"));
+        rank = Rank.getFromId(GsonUtils.getAsInt(object.get("competitiveTier")));
 
         fetched = true;
 
