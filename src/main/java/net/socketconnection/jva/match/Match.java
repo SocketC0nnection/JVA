@@ -31,6 +31,9 @@ public class Match {
     Region region;
     String server;
     List<MatchPlayer> players;
+    MatchTeam red;
+    MatchTeam blue;
+    List<MatchRound> rounds;
 
     boolean fetched;
 
@@ -57,8 +60,40 @@ public class Match {
 
         players = new LinkedList<>();
 
-        for (JsonElement element : playerData) {
-            players.add(new MatchPlayer(valorantAPI).fetchData(region, element.getAsJsonObject()));
+        List<MatchPlayer> redPlayers = new LinkedList<>();
+        List<MatchPlayer> bluePlayers = new LinkedList<>();
+
+        for (JsonElement playerElement : playerData) {
+            MatchPlayer matchPlayer = new MatchPlayer(valorantAPI).fetchData(region, playerElement.getAsJsonObject());
+
+            switch (matchPlayer.getTeam()) {
+                case "Red":
+                    redPlayers.add(matchPlayer);
+
+                    break;
+                case "Blue":
+                    bluePlayers.add(matchPlayer);
+
+                    break;
+            }
+
+            players.add(matchPlayer);
+        }
+
+        JsonObject redData = object.getAsJsonObject("teams").getAsJsonObject("red");
+        JsonObject blueData = object.getAsJsonObject("teams").getAsJsonObject("blue");
+
+        red = new MatchTeam(redPlayers, GsonUtils.getAsBoolean(redData.get("has_won")), GsonUtils.getAsInt(redData.get("rounds_won")),
+                GsonUtils.getAsInt(redData.get("rounds_lost")));
+        blue = new MatchTeam(bluePlayers, GsonUtils.getAsBoolean(blueData.get("has_won")), GsonUtils.getAsInt(blueData.get("rounds_won")),
+                GsonUtils.getAsInt(blueData.get("rounds_lost")));
+
+        JsonArray roundsData = object.getAsJsonArray("rounds");
+
+        rounds = new LinkedList<>();
+
+        for(JsonElement roundElement : roundsData) {
+            rounds.add(new MatchRound().fetchData(roundElement.getAsJsonObject()));
         }
 
         fetched = true;
@@ -82,36 +117,20 @@ public class Match {
         return null;
     }
 
-    public enum Team {
-
-        BLUE("Blue"),
-        RED("Red");
-
-        private final String name;
-
-        Team(String name) {
-            this.name = name;
-        }
-
-        public static Team getFromName(String name) {
-            for (Team team : values()) {
-                if (!team.name.equalsIgnoreCase(name)) {
-                    continue;
-                }
-
-                return team;
-            }
-
-            return null;
-        }
-
-        public String getName() {
-            return name;
-        }
-    }
-
     public boolean isFetched() {
         return fetched;
+    }
+
+    public List<MatchRound> getRounds() {
+        return rounds;
+    }
+
+    public MatchTeam getBlue() {
+        return blue;
+    }
+
+    public MatchTeam getRed() {
+        return red;
     }
 
     public List<MatchPlayer> getPlayers() {

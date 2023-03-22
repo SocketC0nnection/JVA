@@ -1,19 +1,18 @@
 package net.socketconnection.jva.player;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.socketconnection.jva.ValorantAPI;
 import net.socketconnection.jva.enums.Agent;
 import net.socketconnection.jva.enums.Rank;
 import net.socketconnection.jva.enums.Region;
-import net.socketconnection.jva.match.Match;
+import net.socketconnection.jva.match.MatchTeam;
 import net.socketconnection.jva.models.image.AgentImage;
 import net.socketconnection.jva.models.player.*;
 import net.socketconnection.jva.utils.GsonUtils;
 
 public class MatchPlayer extends ValorantPlayer {
 
-    Match.Team team;
+    String team;
     Agent agent;
     String playerTitle;
     String partyId;
@@ -37,7 +36,7 @@ public class MatchPlayer extends ValorantPlayer {
         playerId = GsonUtils.getAsString(object.get("puuid"));
         username = GsonUtils.getAsString(object.get("name"));
         tag = GsonUtils.getAsString(object.get("tag"));
-        team = Match.Team.getFromName(GsonUtils.getAsString(object.get("team")));
+        team = GsonUtils.getAsString(object.get("team"));
         level = GsonUtils.getAsInt(object.get("level"));
         agent = Agent.getFromName(GsonUtils.getAsString(object.get("character")));
         rank = Rank.getFromId(GsonUtils.getAsInt(object.get("currenttier")));
@@ -140,7 +139,7 @@ public class MatchPlayer extends ValorantPlayer {
         return agent;
     }
 
-    public Match.Team getTeam() {
+    public String getTeam() {
         return team;
     }
 }
