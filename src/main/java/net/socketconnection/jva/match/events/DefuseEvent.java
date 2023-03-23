@@ -9,31 +9,28 @@ import net.socketconnection.jva.utils.GsonUtils;
 
 import java.util.LinkedHashMap;
 
-public class PlantEvent extends SpikeEvent {
+public class DefuseEvent extends SpikeEvent {
 
-    String site;
-
-    public PlantEvent(MatchRound matchRound) {
+    public DefuseEvent(MatchRound matchRound) {
         super(matchRound);
     }
 
     @Override
     public Event fetchData(JsonObject object) {
-        if(!object.get("plant_location").isJsonNull()) {
-            JsonObject plantLocationData = object.getAsJsonObject("plant_location");
+        if(!object.get("defuse_location").isJsonNull()) {
+            JsonObject plantLocationData = object.getAsJsonObject("defuse_location");
 
             location = new Location(GsonUtils.getAsInt(plantLocationData.get("x")), GsonUtils.getAsInt(plantLocationData.get("y")), 0);
         }
 
-        if(!object.get("planted_by").isJsonNull()) {
-            interactor = matchRound.getPlayer(GsonUtils.getAsString(object.getAsJsonObject("planted_by").get("puuid")));
+        if(!object.get("defused_by").isJsonNull()) {
+            interactor = matchRound.getPlayer(GsonUtils.getAsString(object.getAsJsonObject("defused_by").get("puuid")));
         }
 
-        site = GsonUtils.getAsString(object.get("plant_site"));
-        timeInRound = GsonUtils.getAsLong(object.get("plant_time_in_round"));
+        timeInRound = GsonUtils.getAsLong(object.get("defuse_time_in_round"));
 
-        if(!object.get("player_locations_on_plant").isJsonNull()) {
-            JsonArray playerLocationData = object.getAsJsonArray("player_locations_on_plant");
+        if(!object.get("player_locations_on_defuse").isJsonNull()) {
+            JsonArray playerLocationData = object.getAsJsonArray("player_locations_on_defuse");
 
             playerLocations = new LinkedHashMap<>();
 
@@ -49,9 +46,4 @@ public class PlantEvent extends SpikeEvent {
 
         return this;
     }
-
-    public String getSite() {
-        return site;
-    }
-
 }

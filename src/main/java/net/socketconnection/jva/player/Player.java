@@ -11,7 +11,6 @@ public abstract class Player {
     String username;
     String tag;
     String playerId;
-    Rank rank;
 
     boolean fetched;
 
@@ -25,10 +24,6 @@ public abstract class Player {
 
     public String getRiotId() {
         return RiotUtils.toRiotId(username, tag);
-    }
-
-    public Rank getRank() {
-        return rank;
     }
 
     public String getPlayerId() {

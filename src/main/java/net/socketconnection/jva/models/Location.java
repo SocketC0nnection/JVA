@@ -4,15 +4,15 @@ public final class Location {
 
     private final int x;
     private final int y;
-    private final int viewRadians;
+    private final double viewRadians;
 
-    public Location(int x, int y, int viewRadians) {
+    public Location(int x, int y, double viewRadians) {
         this.x = x;
         this.y = y;
         this.viewRadians = viewRadians;
     }
 
-    public int getViewRadians() {
+    public double getViewRadians() {
         return viewRadians;
     }
 

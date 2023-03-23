@@ -5,7 +5,6 @@ import net.socketconnection.jva.ValorantAPI;
 import net.socketconnection.jva.enums.Agent;
 import net.socketconnection.jva.enums.Rank;
 import net.socketconnection.jva.enums.Region;
-import net.socketconnection.jva.match.MatchTeam;
 import net.socketconnection.jva.models.image.AgentImage;
 import net.socketconnection.jva.models.player.*;
 import net.socketconnection.jva.utils.GsonUtils;
@@ -14,6 +13,7 @@ public class MatchPlayer extends ValorantPlayer {
 
     String team;
     Agent agent;
+    Rank rank;
     String playerTitle;
     String partyId;
     long playtime;
@@ -133,6 +133,10 @@ public class MatchPlayer extends ValorantPlayer {
 
     public String getPlayerTitle() {
         return playerTitle;
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 
     public Agent getAgent() {

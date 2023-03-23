@@ -23,6 +23,7 @@ public class ValorantPlayer extends Player {
     int level;
     PlayerCard playerCard;
     String lastUpdate;
+    Rank rank;
     RankImage rankImage;
     int rankRating;
     int mmrChange;
@@ -128,6 +129,10 @@ public class ValorantPlayer extends Player {
 
     public RankImage getRankImage() {
         return rankImage;
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 
     public String getLastUpdate() {

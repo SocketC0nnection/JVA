@@ -6,10 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.socketconnection.jva.enums.Language;
 import net.socketconnection.jva.enums.Region;
-import net.socketconnection.jva.exceptions.IncorrectDataException;
-import net.socketconnection.jva.exceptions.InvalidAuthenticationException;
-import net.socketconnection.jva.exceptions.InvalidRiotIdentificationException;
-import net.socketconnection.jva.exceptions.RateLimitedException;
+import net.socketconnection.jva.exceptions.*;
 import net.socketconnection.jva.models.Version;
 import net.socketconnection.jva.models.WebsiteArticle;
 import net.socketconnection.jva.models.shop.Bundle;
@@ -275,7 +272,7 @@ public class ValorantAPI {
             case 429:
                 throw new RateLimitedException(connection.getResponseMessage());
             default:
-                throw new IncorrectDataException("Rest API returned unknown error code: " + connection.getResponseMessage());
+                throw new FetchException("Rest API returned unknown error code: " + connection.getResponseMessage());
         }
 
         StringBuilder builder = new StringBuilder();

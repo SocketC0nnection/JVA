@@ -17,6 +17,7 @@ public class LeaderboardPlayer extends Player {
     int leaderboardRank;
     int rankRating;
     int amountOfWins;
+    Rank rank;
 
     public LeaderboardPlayer(ValorantAPI valorantAPI) {
         super(valorantAPI);
@@ -55,6 +56,10 @@ public class LeaderboardPlayer extends Player {
         }
 
         return super.getRiotId();
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 
     public int getAmountOfWins() {

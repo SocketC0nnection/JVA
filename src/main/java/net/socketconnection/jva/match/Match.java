@@ -93,7 +93,7 @@ public class Match {
         rounds = new LinkedList<>();
 
         for(JsonElement roundElement : roundsData) {
-            rounds.add(new MatchRound().fetchData(roundElement.getAsJsonObject()));
+            rounds.add(new MatchRound(this).fetchData(roundElement.getAsJsonObject()));
         }
 
         fetched = true;
