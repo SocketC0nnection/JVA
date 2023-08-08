@@ -1,6 +1,6 @@
 package net.socketconnection.jva.player;
 
-import net.socketconnection.jva.ValorantAPI;
+import net.socketconnection.jva.api.ValorantAPI;
 import net.socketconnection.jva.exceptions.FetchException;
 
 import java.io.IOException;

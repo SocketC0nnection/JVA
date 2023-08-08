@@ -3,14 +3,14 @@ package net.socketconnection.jva.player;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.socketconnection.jva.ValorantAPI;
+import net.socketconnection.jva.api.ValorantAPI;
 import net.socketconnection.jva.enums.GameMode;
 import net.socketconnection.jva.enums.Rank;
 import net.socketconnection.jva.enums.Region;
 import net.socketconnection.jva.exceptions.InvalidRiotIdentificationException;
 import net.socketconnection.jva.match.Match;
-import net.socketconnection.jva.models.player.PlayerCard;
 import net.socketconnection.jva.models.image.RankImage;
+import net.socketconnection.jva.models.player.PlayerCard;
 import net.socketconnection.jva.utils.GsonUtils;
 
 import java.io.IOException;

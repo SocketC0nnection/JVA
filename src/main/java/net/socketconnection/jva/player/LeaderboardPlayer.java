@@ -1,7 +1,7 @@
 package net.socketconnection.jva.player;
 
 import com.google.gson.JsonObject;
-import net.socketconnection.jva.ValorantAPI;
+import net.socketconnection.jva.api.ValorantAPI;
 import net.socketconnection.jva.enums.Rank;
 import net.socketconnection.jva.exceptions.FetchException;
 import net.socketconnection.jva.utils.GsonUtils;
