@@ -5,6 +5,7 @@ public enum GameMode {
     UNRATED("unrated", "Unrated"),
     COMPETITIVE("competitive", "Competitive"),
     DEATHMATCH("deathmatch", "Deathmatch"),
+    TEAM_DEATHMATCH("teamdeathmatch", "Team Deathmatch"),
     SWIFTPLAY("swiftplay", "Swiftplay"),
     SPIKE_RUSH("spikerush", "Spike Rush"),
     REPLICATION("replication", "Replication"),
