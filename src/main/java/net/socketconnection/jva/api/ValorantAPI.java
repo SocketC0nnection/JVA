@@ -1,4 +1,4 @@
-package net.socketconnection.jva;
+package net.socketconnection.jva.api;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -19,25 +19,29 @@ import net.socketconnection.jva.models.status.StatusEntry;
 import net.socketconnection.jva.models.status.Update;
 import net.socketconnection.jva.player.LeaderboardPlayer;
 import net.socketconnection.jva.utils.GsonUtils;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import static java.net.HttpURLConnection.*;
+import static net.socketconnection.jva.utils.RiotUtils.BASE_URL;
+
 public class ValorantAPI {
 
-    private final URL baseUrl;
     private final String apiKey;
+    private final OkHttpClient okHttpClient;
 
     public ValorantAPI(String apiKey) throws IOException {
-        baseUrl = new URL("https://api.henrikdev.xyz/valorant");
         this.apiKey = apiKey;
+        this.okHttpClient = new OkHttpClient();
     }
 
     public ValorantAPI() throws IOException {
@@ -47,10 +51,10 @@ public class ValorantAPI {
     public List<LeaderboardPlayer> getLeaderboard(Region region, String riotId) throws IOException {
         JsonArray leaderboardData;
 
-        if(riotId == null) {
+        if (riotId == null) {
             leaderboardData = sendRestRequest("/v1/leaderboard/" + region.getQuery()).getAsJsonArray();
         } else {
-            if(!riotId.contains("#") || riotId.split("#").length < 2) {
+            if (!riotId.contains("#") || riotId.split("#").length < 2) {
                 throw new InvalidRiotIdentificationException("Unknown format (right format: NAME#TAG)");
             }
 
@@ -81,15 +85,15 @@ public class ValorantAPI {
         List<StatusEntry> maintenances = new LinkedList<>();
         List<StatusEntry> incidents = new LinkedList<>();
 
-        for(JsonElement maintenanceElement : maintenancesData) {
+        for (JsonElement maintenanceElement : maintenancesData) {
             JsonObject maintenanceObject = maintenanceElement.getAsJsonObject();
             List<Update> updates = new LinkedList<>();
 
-            for(JsonElement updateElement : maintenanceObject.getAsJsonArray("updates")) {
+            for (JsonElement updateElement : maintenanceObject.getAsJsonArray("updates")) {
                 JsonObject updateObject = updateElement.getAsJsonObject();
                 Map<Language, String> translations = new LinkedHashMap<>();
 
-                for(JsonElement translationElement : updateObject.getAsJsonArray("translations")) {
+                for (JsonElement translationElement : updateObject.getAsJsonArray("translations")) {
                     JsonObject translationObject = translationElement.getAsJsonObject();
 
                     translations.put(Language.getFromLocale(GsonUtils.getAsString(translationObject.get("locale"))),
@@ -98,7 +102,7 @@ public class ValorantAPI {
 
                 List<String> publishLocations = new LinkedList<>();
 
-                for(JsonElement publishElement : updateObject.getAsJsonArray("publish_locations")) {
+                for (JsonElement publishElement : updateObject.getAsJsonArray("publish_locations")) {
                     publishLocations.add(GsonUtils.getAsString(publishElement));
                 }
 
@@ -109,13 +113,13 @@ public class ValorantAPI {
 
             List<String> platforms = new LinkedList<>();
 
-            for(JsonElement platformElement : maintenanceObject.getAsJsonArray("platforms")) {
+            for (JsonElement platformElement : maintenanceObject.getAsJsonArray("platforms")) {
                 platforms.add(GsonUtils.getAsString(platformElement));
             }
 
             Map<Language, String> titles = new LinkedHashMap<>();
 
-            for(JsonElement titleElement : maintenanceObject.getAsJsonArray("titles")) {
+            for (JsonElement titleElement : maintenanceObject.getAsJsonArray("titles")) {
                 JsonObject titleObject = titleElement.getAsJsonObject();
 
                 titles.put(Language.getFromLocale(GsonUtils.getAsString(titleObject.get("locale"))), GsonUtils.getAsString(titleObject.get("content")));
@@ -127,15 +131,15 @@ public class ValorantAPI {
                     GsonUtils.getAsString(maintenanceObject.get("incident_severity"))));
         }
 
-        for(JsonElement incidentElement : incidentsData) {
+        for (JsonElement incidentElement : incidentsData) {
             JsonObject incidentObject = incidentElement.getAsJsonObject();
             List<Update> updates = new LinkedList<>();
 
-            for(JsonElement updateElement : incidentObject.getAsJsonArray("updates")) {
+            for (JsonElement updateElement : incidentObject.getAsJsonArray("updates")) {
                 JsonObject updateObject = updateElement.getAsJsonObject();
                 Map<Language, String> translations = new LinkedHashMap<>();
 
-                for(JsonElement translationElement : updateObject.getAsJsonArray("translations")) {
+                for (JsonElement translationElement : updateObject.getAsJsonArray("translations")) {
                     JsonObject translationObject = translationElement.getAsJsonObject();
 
                     translations.put(Language.getFromLocale(GsonUtils.getAsString(translationObject.get("locale"))), GsonUtils.getAsString(translationObject.get("content")));
@@ -143,7 +147,7 @@ public class ValorantAPI {
 
                 List<String> publishLocations = new LinkedList<>();
 
-                for(JsonElement publishElement : updateObject.getAsJsonArray("publish_locations")) {
+                for (JsonElement publishElement : updateObject.getAsJsonArray("publish_locations")) {
                     publishLocations.add(GsonUtils.getAsString(publishElement));
                 }
 
@@ -154,13 +158,13 @@ public class ValorantAPI {
 
             List<String> platforms = new LinkedList<>();
 
-            for(JsonElement platformElement : incidentObject.getAsJsonArray("platforms")) {
+            for (JsonElement platformElement : incidentObject.getAsJsonArray("platforms")) {
                 platforms.add(GsonUtils.getAsString(platformElement));
             }
 
             Map<Language, String> titles = new LinkedHashMap<>();
 
-            for(JsonElement titleElement : incidentObject.getAsJsonArray("titles")) {
+            for (JsonElement titleElement : incidentObject.getAsJsonArray("titles")) {
                 JsonObject titleObject = titleElement.getAsJsonObject();
 
                 titles.put(Language.getFromLocale(GsonUtils.getAsString(titleObject.get("locale"))), GsonUtils.getAsString(titleObject.get("content")));
@@ -187,7 +191,7 @@ public class ValorantAPI {
 
         List<WebsiteArticle> websiteArticles = new LinkedList<>();
 
-        for(JsonElement articleElement : articleData) {
+        for (JsonElement articleElement : articleData) {
             JsonObject articleObject = articleElement.getAsJsonObject();
 
             websiteArticles.add(new WebsiteArticle(GsonUtils.getAsString(articleObject.get("banner_url")), WebsiteArticle.Category.getFromQuery(GsonUtils.getAsString(articleObject.get("category"))),
@@ -203,13 +207,13 @@ public class ValorantAPI {
 
         List<Bundle> bundles = new LinkedList<>();
 
-        for(JsonElement bundleElement : bundlesData) {
+        for (JsonElement bundleElement : bundlesData) {
             JsonObject bundleObject = bundleElement.getAsJsonObject();
             JsonArray itemData = bundleObject.getAsJsonArray("items");
 
             List<BundleItem> items = new LinkedList<>();
 
-            for(JsonElement itemElement : itemData) {
+            for (JsonElement itemElement : itemData) {
                 JsonObject itemObject = itemElement.getAsJsonObject();
 
                 items.add(new BundleItem(GsonUtils.getAsString(itemObject.get("uuid")), GsonUtils.getAsString(itemObject.get("name")),
@@ -232,12 +236,12 @@ public class ValorantAPI {
 
         List<OfferItem> items = new LinkedList<>();
 
-        for(JsonElement offerElement : offersData) {
+        for (JsonElement offerElement : offersData) {
             JsonObject offerObject = offerElement.getAsJsonObject();
 
             ContentTier contentTier = null;
 
-            if(!offerObject.get("content_tier").isJsonNull()) {
+            if (!offerObject.get("content_tier").isJsonNull()) {
                 JsonObject contentTierObject = offerObject.getAsJsonObject("content_tier");
 
                 contentTier = new ContentTier(GsonUtils.getAsString(contentTierObject.get("name")),
@@ -253,36 +257,30 @@ public class ValorantAPI {
     }
 
     public JsonElement sendRestRequest(String uriPath) throws IOException {
-        HttpURLConnection connection = (HttpURLConnection) new URL(baseUrl + uriPath).openConnection();
+        var request = constructURLBuilder(uriPath, apiKey != null);
+        var call = okHttpClient.newCall(request);
+        var response = call.execute();
 
-        if(apiKey != null) {
-            connection.setRequestProperty("Authorization", apiKey);
-        }
-
-        connection.setRequestProperty("User-Agent", "Java Valorant API (JVA)");
-        connection.setDoInput(true);
-
-        switch (connection.getResponseCode()) {
-            case 200:
+        switch (response.code()) {
+            case HTTP_OK:
                 break;
-            case 403:
-                throw new InvalidAuthenticationException(connection.getResponseMessage());
-            case 404:
-                throw new IncorrectDataException(connection.getResponseMessage());
+            case HTTP_BAD_REQUEST:
+                throw new InvalidRequestException(response.message());
+            case HTTP_FORBIDDEN:
+                throw new InvalidAuthenticationException(response.message());
+            case HTTP_NOT_FOUND:
+                throw new IncorrectDataException(response.message());
             case 429:
-                throw new RateLimitedException(connection.getResponseMessage());
+                throw new RateLimitedException(response.message());
             default:
-                throw new FetchException("Rest API returned unknown error code: " + connection.getResponseMessage());
+                throw new FetchException("Rest API returned unknown error code: " + response.message());
         }
 
-        StringBuilder builder = new StringBuilder();
+        var builder = new StringBuilder();
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String msg;
+        var reader = new BufferedReader(new InputStreamReader(response.body().byteStream()));
 
-        while ((msg = reader.readLine()) != null) {
-            builder.append(msg).append("\n");
-        }
+        reader.lines().forEach(builder::append);
 
         return new Gson().fromJson(builder.toString(), JsonElement.class);
     }
@@ -291,7 +289,23 @@ public class ValorantAPI {
         return apiKey;
     }
 
-    public URL getBaseUrl() {
-        return baseUrl;
+    public Request constructURLBuilder(String uriPath, boolean hasApiKey) {
+        var url = BASE_URL + "valorant" + uriPath;
+        var urlBuilder = HttpUrl.parse(url).newBuilder();
+        var targetURL = urlBuilder.build().toString();
+        if (hasApiKey) {
+            return new Request.Builder()
+                    .url(targetURL)
+                    .addHeader("Authorization", apiKey)
+                    .addHeader("User-Agent", "Java Valorant API (JVA)")
+                    .build();
+        }
+
+        Request request = new Request.Builder()
+                .url(targetURL)
+                .addHeader("User-Agent", "Java Valorant API (JVA)")
+                .build();
+
+        return request;
     }
 }

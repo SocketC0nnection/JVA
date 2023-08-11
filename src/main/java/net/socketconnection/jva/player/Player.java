@@ -1,7 +1,6 @@
 package net.socketconnection.jva.player;
 
-import net.socketconnection.jva.ValorantAPI;
-import net.socketconnection.jva.enums.Rank;
+import net.socketconnection.jva.api.ValorantAPI;
 import net.socketconnection.jva.utils.RiotUtils;
 
 public abstract class Player {

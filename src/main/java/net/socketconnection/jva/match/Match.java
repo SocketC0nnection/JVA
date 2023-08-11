@@ -3,7 +3,7 @@ package net.socketconnection.jva.match;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.socketconnection.jva.ValorantAPI;
+import net.socketconnection.jva.api.ValorantAPI;
 import net.socketconnection.jva.enums.GameMode;
 import net.socketconnection.jva.enums.Map;
 import net.socketconnection.jva.enums.Region;
@@ -183,5 +183,28 @@ public class Match {
 
     public ValorantAPI getValorantAPI() {
         return valorantAPI;
+    }
+
+    @Override
+    public String toString() {
+        return "Match{" +
+                "valorantAPI=" + valorantAPI +
+                ", matchId='" + matchId + '\'' +
+                ", map=" + map +
+                ", gameVersion='" + gameVersion + '\'' +
+                ", gameLength=" + gameLength +
+                ", gameStart='" + gameStart + '\'' +
+                ", roundsPlayed=" + roundsPlayed +
+                ", gameMode=" + gameMode +
+                ", seasonId='" + seasonId + '\'' +
+                ", platform='" + platform + '\'' +
+                ", region=" + region +
+                ", server='" + server + '\'' +
+                ", players=" + players +
+                ", red=" + red +
+                ", blue=" + blue +
+                ", rounds=" + rounds +
+                ", fetched=" + fetched +
+                '}';
     }
 }

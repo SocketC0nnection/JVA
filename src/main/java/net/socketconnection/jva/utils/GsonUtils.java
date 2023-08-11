@@ -4,8 +4,11 @@ import com.google.gson.JsonElement;
 
 public class GsonUtils {
 
+    private GsonUtils() {
+    }
+
     public static String getAsString(JsonElement element) {
-        if(element.isJsonNull()) {
+        if (element.isJsonNull()) {
             return null;
         }
 
